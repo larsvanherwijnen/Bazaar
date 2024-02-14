@@ -4,9 +4,14 @@ export default {
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
     "./resources/**/*.vue",
-  ],  theme: {
+  ],
+  theme: {
     extend: {},
   },
+  safelist: {
+    pattern: /border-(red|green|blue)/,
+  },
+
   plugins: [],
 }
 
