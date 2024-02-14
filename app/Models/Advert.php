@@ -6,7 +6,7 @@ use App\Enum\AdvertType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Adverts extends Model
+class Advert extends Model
 {
     use HasFactory;
 
@@ -17,4 +17,8 @@ class Adverts extends Model
         'type' => AdvertType::class,
     ];
 
+    public function advertImages()
+    {
+        return $this->hasMany(AdvertImage::class);
+    }
 }

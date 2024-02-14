@@ -2,13 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\Adverts;
+use App\Models\AdvertImage;
+use App\Models\Advert;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class AdvertsFactory extends Factory
+class AdvertFactory extends Factory
 {
-    protected $model = Adverts::class;
+    protected $model = Advert::class;
 
     public function definition()
     {
@@ -23,5 +24,10 @@ class AdvertsFactory extends Factory
             'expiry_date' => $this->faker->dateTime(),
             // Add any other fields as necessary...
         ];
+    }
+
+    public function withImage()
+    {
+        return $this->has(AdvertImage::factory()->count(1));
     }
 }

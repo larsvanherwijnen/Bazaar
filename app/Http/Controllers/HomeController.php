@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Adverts;
+use App\Models\Advert;
+use App\Models\AdvertImage;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $adverts = Adverts::all();
+        $adverts = Advert::with('advertImages')->get();
 
         return view('home', ['adverts' => $adverts]);
     }
@@ -20,7 +21,7 @@ class HomeController extends Controller
         $max_price = $request->get('max_price');
         $query = $request->get('query');
 
-        $adverts = Adverts::query();
+        $adverts = Advert::query();
 
         if ($min_price) {
             $adverts->where('price', '>=', $min_price);
