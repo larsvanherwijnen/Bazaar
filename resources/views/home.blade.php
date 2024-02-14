@@ -34,16 +34,22 @@
         </form>
     </div>
     <main class="flex flex-wrap">
+    @if ($adverts->isEmpty())
+        <div class="w-full text-center py-8">
+            <p class="text-xl">No adverts found.</p>
+        </div>
+    @else
         @foreach ($adverts as $advert)
             <div class="w-1/5 p-4">
                 <div class="bg-white rounded shadow p-4 flex flex-col">
                     <div class="mb-2 overflow-hidden overflow-ellipsis">
                         <h2 class="text-xl font-bold whitespace-nowrap">{{ Str::limit($advert->title, 50) }}</h2>
                     </div>
-                 <img src="{{ $advert->advertImages->first() ? asset($advert->advertImages->first()->path) : asset('images/img.png') }}" alt="Advert Image" class="w-full h-64 object-cover mb-4">
+                    <img src="{{ $advert->advertImages->first() ? asset($advert->advertImages->first()->path) : asset('images/img.png') }}" alt="Advert Image" class="w-full h-64 object-cover mb-4">
                     <p class="text-lg font-semibold">€{{ $advert->price }}</p>
                 </div>
             </div>
         @endforeach
-    </main>
+    @endif
+</main>
 @endsection
