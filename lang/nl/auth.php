@@ -14,4 +14,5 @@ return [
 
     'failed' => 'Deze gegevens komen niet overeen met onze gegevens.',
     'login' => 'Inloggen',
+    'logout' => 'Uitloggen',
 ];

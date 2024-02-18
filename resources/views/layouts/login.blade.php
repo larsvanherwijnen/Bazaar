@@ -8,10 +8,10 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     @vite('resources/css/app.css')
 </head>
-<body class="bg-[#f0efed]">
-    @include('partials.header')
-    @include('partials.search')
+<body>
+<div class="bg-[#f0efed]">
     @yield('content')
-    @vite('resources/js/app.js')
+</div>
+@vite('resources/js/app.js')
 </body>
 </html>

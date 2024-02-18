@@ -14,7 +14,6 @@ class HomeController extends Controller
 
         return view('home', ['adverts' => $adverts]);
     }
-
     public function search(Request $request): \Illuminate\View\View
     {
         $min_price = $request->get('min_price');
