@@ -1,9 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.login')
 
 @section('content')
-    <div class="h-screen flex items-center justify-center">
-        <div class="bg-gray-200 shadow-2xl w-1/3 p-4 rounded space-y-4">
-            {{ __('auth.login') }}
+    <div class="h-screen flex flex-col items-center justify-center">
+        <h1 class="text-3xl font-bold mb-4">{{ __('auth.login') }}</h1>
+        <div class="bg-white shadow-2xl w-1/3 p-4 rounded space-y-4">
+            @include('auth.partials.page_switcher')
             <form method="POST" action="{{ route('login') }}" class="w-full space-y-4">
                 @csrf
                 <input type="hidden" name="account_type" x-model="accountType">
