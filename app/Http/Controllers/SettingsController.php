@@ -33,12 +33,16 @@ class SettingsController extends Controller
 
     private function uploadFile($file, $previousFilePath, $config, $fieldName, $company)
     {
+        if (!$file) {
+            return $config;
+        }
+
         if ($previousFilePath) {
             Storage::delete($previousFilePath);
         }
 
         $fileLocation = "public/{$company->url}/images";
-        $filePath = Storage::putFile($fileLocation, $file, 'public');
+        $filePath = Storage::put($fileLocation, $file, 'public');
         return $config->merge([$fieldName => $filePath]);
     }
 }
