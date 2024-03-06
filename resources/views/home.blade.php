@@ -2,6 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('partials.search')
     <div class="flex justify-center space-x-4 mt-8">
         <form method="GET" action="{{ route('search') }}"
               class="flex items-center border border-gray-300 rounded px-4 py-2 shadow-lg">

@@ -22,4 +22,9 @@ class Company extends Model
         'config',
         'url',
     ];
+
+    protected $casts = [
+        'config' => 'collection',
+    ];
+
 }
