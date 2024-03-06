@@ -20,8 +20,8 @@ class SettingsController extends Controller
             $company = $user->company;
             $config = $company->config->merge($request->only(['primary_color', 'secondary_color', 'description']));
 
-            $config = $this->uploadFile($request->file('logo'), $company->config->get('logo'), $config, 'logo', $company);
-            $config = $this->uploadFile($request->file('banner'), $company->config->get('banner'), $config, 'banner', $company);
+            $config = $this->uploadFile($request->file('logo'),$config, 'logo', $company);
+            $config = $this->uploadFile($request->file('banner'), $config, 'banner', $company);
 
             $company->update(['config' => $config]);
         }
@@ -31,14 +31,14 @@ class SettingsController extends Controller
         return redirect()->route('my-account.settings');
     }
 
-    private function uploadFile($file, $previousFilePath, $config, $fieldName, $company)
+    private function uploadFile($file, $config, $fieldName, $company)
     {
         if (!$file) {
             return $config;
         }
 
-        if ($previousFilePath) {
-            Storage::delete($previousFilePath);
+        if ($config->get($fieldName)) {
+            Storage::delete($config->get($fieldName));
         }
 
         $fileLocation = "public/{$company->url}/images";
