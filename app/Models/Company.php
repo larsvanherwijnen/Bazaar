@@ -20,7 +20,6 @@ class Company extends Model
         'name',
         'kvk',
         'config',
-        'url',
     ];
 
     protected $casts = [
