@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class RegisterController extends Controller
@@ -33,7 +34,8 @@ class RegisterController extends Controller
                     'name' => $request->username,
                     'email' => $request->email,
                     'password' => Hash::Make($request->password),
-                    'type' => RolesEnum::fromString($request->account_type), // Convert to enum
+                    'type' => RolesEnum::fromString($request->account_type),
+                    'url' => $request->url ?? Str::slug($request->username),
                 ]);
 
 
@@ -41,7 +43,6 @@ class RegisterController extends Controller
                     $company = new Company([
                         'name' => $request->companyName,
                         'kvk' => $request->kvk,
-                        'url' => $request->url,
                     ]);
 
                     $user->company()->save($company);
