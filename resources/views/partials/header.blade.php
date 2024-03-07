@@ -1,5 +1,5 @@
 <div class="bg-gray-100">
-    <div class="w-1/2 mx-auto">
+    <div class="containernpm mx-auto">
         <div class="flex justify-between p-4 items-center">
             <div>
                 <h1 class="font-bold text-xl">De Bazaar</h1>

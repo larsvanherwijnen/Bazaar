@@ -8,4 +8,5 @@ return [
     'my_bazaar' => 'My Bazaar',
     'save' => 'Save',
     'description' => 'Description',
+    'featured' => 'Featured',
 ];

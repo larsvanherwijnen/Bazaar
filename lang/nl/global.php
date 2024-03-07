@@ -8,4 +8,5 @@ return [
     'my_bazaar' => 'Mijn Bazaar',
     'save' => 'Opslaan',
     'description' => 'Omschrijving',
+    'featured' => 'Uitgelicht',
 ];
