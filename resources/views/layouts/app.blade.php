@@ -10,7 +10,6 @@
 </head>
 <body class="bg-[#f0efed]">
     @include('partials.header')
-    @include('partials.search')
     @yield('content')
     @vite('resources/js/app.js')
 </body>

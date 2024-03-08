@@ -22,10 +22,10 @@ class RegistrationFormRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            "account_type" => "required",
-            "username" => "required",
-            "email" => "required|email",
-            "password" => "required|confirmed",
+            'account_type' => 'required',
+            'username' => 'required|unique:users,name',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed',
         ];
 
         if ($this->input('account_type') === 'business') {
