@@ -1,0 +1,32 @@
+name: Check & fix styling
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  pint:
+    runs-on: ubuntu-latest
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - name: Install dependencies
+        run: composer install --no-interaction
+      - name: Run Pint
+        run: ./vendor/bin/pint
+      - name: Run Larastan
+        run: composer lint
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Fix styling
