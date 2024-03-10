@@ -39,15 +39,16 @@ class ContractController extends Controller
 
     public function uploadContract(UploadContractRequest $request, User $user): RedirectResponse
     {
-        $file = $request->file('contract');
+        /** @phpstan-ignore-next-line  */
+        $file = $request->file('contract')->getClientOriginalName();
 
-        $fileLocation = 'public/contracts/'.$user->company->name.'/'.$file->getClientOriginalName();
+        $fileLocation = 'public/contracts/'.$user->company->name.'/'.$file;
 
         $user->contract()->create([
             'path' => $fileLocation,
         ]);
 
-        Storage::put($fileLocation, $file->getClientOriginalName(), 'public');
+        Storage::put($fileLocation, $file, 'public');
 
         return redirect()->route('admin.contracts')->with('success', 'Contract uploaded successfully');
     }
