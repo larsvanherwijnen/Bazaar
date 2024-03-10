@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SettingsFormRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -43,17 +42,12 @@ class SettingsController extends Controller
 
     /**
      * Upload a file and return the new config.
-     * @param Collection $config
-     * @param string $fileName
-     * @param string $folder
-     * @param string $disk
-     * @return Collection
      */
     private function uploadFile(SettingsFormRequest $request, Collection $config, string $fileName, string $folder, string $disk = 'public'): Collection
     {
         $file = $request->file($fileName);
 
-        if (!$file) {
+        if (! $file) {
             return $config;
         }
 

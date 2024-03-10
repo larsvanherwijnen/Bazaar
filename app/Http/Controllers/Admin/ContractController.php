@@ -8,11 +8,11 @@ use App\Http\Requests\UploadContractRequest;
 use App\Models\Contract;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Spatie\Browsershot\Browsershot;
 use Spatie\LaravelPdf\PdfBuilder;
+
 use function Spatie\LaravelPdf\Support\pdf;
 
 class ContractController extends Controller
@@ -28,7 +28,7 @@ class ContractController extends Controller
     {
         return pdf('admin.pdf.contract', [
             'company' => $user->company,
-        ])->withBrowsershot(function(Browsershot $browsershot) {
+        ])->withBrowsershot(function (Browsershot $browsershot) {
             $browsershot->setNodeBinary('/Users/larsvanherwijnen/.nvm/versions/node/v20.11.1/bin/node')
                 ->setNpmBinary('/Users/larsvanherwijnen/.nvm/versions/node/v20.11.1/bin/npm');
         })
@@ -62,5 +62,4 @@ class ContractController extends Controller
 
         return redirect()->route('admin.contracts')->with('success', 'Contract approved successfully');
     }
-
 }
