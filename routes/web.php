@@ -25,6 +25,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'role:'.RolesEnum::ADMIN->value, 'prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('/', AdminController::class)->name('dashboard');
         Route::get('/contracts', [ContractController::class, 'index'])->name('contracts');
+        Route::get('/contracts/{user}/export', [ContractController::class, 'exportContract'])->name('contracts.export');
+        Route::post('/contracts/{user}/upload', [ContractController::class, 'uploadContract'])->name('contracts.upload');
+        Route::post('/contracts/{contract}/approve', [ContractController::class, 'approveContract'])->name('contracts.approve');
     });
 });
 

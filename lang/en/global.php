@@ -9,4 +9,13 @@ return [
     'save' => 'Save',
     'description' => 'Description',
     'featured' => 'Featured',
+    'dashboard' => 'Dashboard',
+    'contracts' => 'Contracts',
+    'contract' => 'Contract',
+    'date' => 'Date',
+    'upload' => 'Upload',
+    'upload_contract' => 'Upload contract',
+    'approve_contract' => 'Approve contract',
+    'export_contract' => 'Export contract',
+    'contract_approved' => 'Contract approved',
 ];
