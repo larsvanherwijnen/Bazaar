@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enum\AdvertType;
+use App\Enum\RolesEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -25,6 +27,8 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'type' => $this->faker->randomElement([RolesEnum::PRIVATE_WITHOUT_ADVERTISING, RolesEnum::PRIVATE_WITH_ADVERTISING, RolesEnum::BUSINESS]),
+            'url' => $this->faker->slug(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

@@ -2,45 +2,65 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\AdvertType;
 use App\Models\Advert;
 use App\Models\AdvertImage;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\ResponseFactory;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class AdvertController extends Controller
 {
     public function createAdvert(): View
     {
-        return view('advert.create');
+        $types = AdvertType::cases();
+        return view('advert.create', compact('types'));
     }
-     public function storeAdvert(Request $request)
-     {
-            $request->validate([
-                'title' => 'required',
-                'description' => 'required',
-                'price' => 'required',
-                'type' => 'required',
-                'images' => 'required',
-                'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-            ]);
-            $advert = new Advert();
-            $advert->title = $request->title;
-            $advert->description = $request->description;
+
+    public function storeAdvert(Request $request) : RedirectResponse
+    {
+        dd($request->all());
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'type' => 'required',
+            'images' => 'required',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'price' => $request->type === 'Sale' ? 'required' : 'nullable',
+            'starting_price' => $request->type === 'Auction' || $request->type === 'Bidding'? 'required' : 'nullable',            'start_date' => $request->type === 'Auction' ? 'required|date' : 'nullable',
+            'end_date' => $request->type === 'Auction' ? 'required|date|after:start_date' : 'nullable',
+        ]);
+
+        $advert = new Advert();
+        $advert->title = $request->title;
+        $advert->description = $request->description;
+        $advert->type = $request->type;
+
+        if ($request->type === 'Sale') {
             $advert->price = $request->price;
-            $advert->type = $request->type;
-            $advert->save();
-            if ($request->hasFile('images')) {
-                foreach ($request->file('images') as $image) {
-                    $name = time() . '_' . $image->getClientOriginalName();
-                    $image->move(public_path('images'), $name);
-                    $advertImage = new AdvertImage();
-                    $advertImage->name = $name;
-                    $advertImage->advert_id = $advert->id;
-                    $advertImage->save();
-                }
+        } else {
+            $advert->starting_price = $request->starting_price;
+            if ($request->type === 'Auction') {
+                $advert->start_date = $request->start_date;
+                $advert->end_date = $request->end_date;
             }
-            return redirect()->route('home');
-     }
+        }
 
+        $advert->save();
 
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $name = time() . '_' . $image->getClientOriginalName();
+                $path = $image->move(public_path('storage/images'), $name);
+                $advertImage = new AdvertImage();
+                $advertImage->advert_id = $advert->id;
+                $advertImage->path = $name;
+                $advertImage->save();
+            }
+        }
+
+        return redirect()->route('home');
+    }
 }
