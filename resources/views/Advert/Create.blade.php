@@ -83,12 +83,11 @@
                 </div>
                 <div id="image-preview" class="grid grid-cols-4 grid-rows-2 gap-2">
                     <div class="image-placeholder col-span-2 row-span-2 border border-gray-300 rounded overflow-hidden h-full">
-                        <img src="https://placehold.co/100" class="w-full h-full object-cover">
+                        <img src="https://placehold.co/600x400?text=Your+image+goes+here" class="w-full h-full object-cover" alt="">
                     </div>
                     @for ($i = 1; $i < 5; $i++)
                         <div class="image-placeholder col-span-1 row-span-1 border border-gray-300 rounded overflow-hidden h-full">
-                            <img src="https://placehold.co/100" class="w-full h-full object-cover">
-                        </div>
+                            <img src="https://placehold.co/600x400?text=Your+image+goes+here" class="w-full h-full object-cover" alt="">                        </div>
                     @endfor
                     <input type="hidden" id="totalImages" name="totalImages" value="0">
                 </div>
