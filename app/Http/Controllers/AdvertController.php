@@ -13,22 +13,24 @@ use Illuminate\View\View;
 
 class AdvertController extends Controller
 {
+    const MAX_IMAGES = 5;
+
     public function createAdvert(): View
     {
         $types = AdvertType::cases();
-        return view('advert.create', compact('types'));
+        $maxImages = self::MAX_IMAGES;
+        return view('advert.create', compact('types', 'maxImages'));
     }
 
     public function storeAdvert(Request $request) : RedirectResponse
     {
-        dd($request->all());
         $request->validate([
             'title' => 'required',
             'description' => 'required',
             'type' => 'required',
-            'images' => 'required',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'price' => $request->type === 'Sale' ? 'required' : 'nullable',
+            'images' => 'required|array|max:' . self::MAX_IMAGES,
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8192',
+            'price' => $request->type === 'Sale' || $request->type === 'Rental' ? 'required' : 'nullable',
             'starting_price' => $request->type === 'Auction' || $request->type === 'Bidding'? 'required' : 'nullable',            'start_date' => $request->type === 'Auction' ? 'required|date' : 'nullable',
             'end_date' => $request->type === 'Auction' ? 'required|date|after:start_date' : 'nullable',
         ]);
@@ -38,11 +40,15 @@ class AdvertController extends Controller
         $advert->description = $request->description;
         $advert->type = $request->type;
 
-        if ($request->type === 'Sale') {
+        if ($request->type === 'Sale' || $request->type === 'Rental') {
             $advert->price = $request->price;
         } else {
             $advert->starting_price = $request->starting_price;
             if ($request->type === 'Auction') {
+                if ($advert->price) {
+                    // Throw an error or handle this situation as you see fit
+                    throw new \Exception('Auction type cannot have a sale price');
+                }
                 $advert->start_date = $request->start_date;
                 $advert->end_date = $request->end_date;
             }
