@@ -9,4 +9,6 @@ return [
     'save' => 'Opslaan',
     'description' => 'Omschrijving',
     'featured' => 'Uitgelicht',
+    'of' => 'van',
+    'submit' => 'Verzenden',
 ];

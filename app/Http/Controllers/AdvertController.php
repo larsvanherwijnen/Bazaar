@@ -24,15 +24,25 @@ class AdvertController extends Controller
 
     public function storeAdvert(Request $request) : RedirectResponse
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'title' => 'required',
             'description' => 'required',
             'type' => 'required',
             'images' => 'required|array|max:' . self::MAX_IMAGES,
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8192',
             'price' => $request->type === 'Sale' || $request->type === 'Rental' ? 'required' : 'nullable',
-            'starting_price' => $request->type === 'Auction' || $request->type === 'Bidding'? 'required' : 'nullable',            'start_date' => $request->type === 'Auction' ? 'required|date' : 'nullable',
+            'starting_price' => $request->type === 'Auction' || $request->type === 'Bidding' ? 'required' : 'nullable',
+            'start_date' => $request->type === 'Auction' ? 'required|date' : 'nullable',
             'end_date' => $request->type === 'Auction' ? 'required|date|after:start_date' : 'nullable',
+        ], [
+            'title' => __('validation.required', ['attribute' => __('advert.attributes.title')]),
+            'description' => __('validation.required', ['attribute' => __('advert.attributes.description')]),
+            'type' => __('validation.required', ['attribute' => __('advert.attributes.type')]),
+            'images' => __('validation.required', ['attribute' => __('advert.attributes.images')]),
+            'price' => __('validation.required', ['attribute' => __('advert.attributes.price')]),
+            'starting_price' => __('validation.required', ['attribute' => __('advert.attributes.starting_price')]),
+            'start_date' => __('validation.required', ['attribute' => __('advert.attributes.start_date')]),
+            'end_date' => __('validation.required', ['attribute' => __('advert.attributes.end_date')]),
         ]);
 
         $advert = new Advert();

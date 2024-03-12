@@ -1,20 +1,9 @@
 @extends('layouts.app')
 @section('content')
     @vite('resources/js/advert.js')
-    @if ($errors->any())
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-            <strong class="font-bold">Oops!</strong>
-            <span class="block sm:inline">There were some errors with your submission.</span>
-            <ul class="mt-3 list-disc list-inside text-sm text-red-600">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="flex justify-center mt-20">
         <div class="bg-white p-10 rounded shadow-md w-1/3">
-            <h1 class="text-2xl mb-6 text-center">Create Advert</h1>
+            <h1 class="text-2xl mb-6 text-center">{{ __('advert.create_advert') }}</h1>
             <form method="post" action="{{ route('advert.store') }}" enctype="multipart/form-data" class="space-y-4" x-data="{ advertType: '{{ old('type', 'Sale') }}' }">                @csrf
                 <input type="hidden" id="type" name="type" x-model="advertType">
 
@@ -24,7 +13,7 @@
                          @click="advertType = 'Sale'">
                         <i class="fa-solid fa-tag text-2xl"></i>
                         <div class="flex flex-col text-center">
-                            <span>Sale</span>
+                            <span>{{ __('advert.sale') }}</span>
                         </div>
                     </div>
                     <div class="w-1/3 bg-gray-200  rounded flex flex-col items-center py-3"
@@ -32,7 +21,7 @@
                          @click="advertType = 'Auction'">
                         <i class="fa-solid fa-gavel text-2xl"></i>
                         <div class="flex flex-col text-center">
-                            <span>Auction</span>
+                            <span>{{ __('advert.auction') }}</span>
                         </div>
                     </div>
                     <div class="w-1/3 bg-gray-200 rounded flex flex-col items-center py-3"
@@ -40,7 +29,7 @@
                          @click="advertType = 'Bidding'">
                         <i class="fa-solid fa-building text-2xl"></i>
                         <div class="flex flex-col text-center">
-                            <span>Bidding</span>
+                            <span>{{ __('advert.bidding') }}</span>
                         </div>
                     </div>
                     <div class="w-1/3 bg-gray-200 rounded flex flex-col items-center py-3"
@@ -48,7 +37,7 @@
                          @click="advertType = 'Rental'">
                         <i class="fa-solid fa-home text-2xl"></i>
                         <div class="flex flex-col text-center">
-                            <span>Rental</span>
+                            <span>{{ __('advert.rental') }}</span>
                         </div>
                     </div>
                 </div>
@@ -57,14 +46,14 @@
                     @error('title')
                     <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
                     @enderror
-                    <label for="title" class="block text-sm font-medium text-gray-700">Title:</label>
+                    <label for="title" class="block text-sm font-medium text-gray-700">{{ __('advert.attributes.title') }}:</label>
                     <input type="text" id="title" name="title" value="{{ old('title') }}" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
                 <div>
                     @error('description')
                     <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
                     @enderror
-                    <label for="description" class="block text-sm font-medium text-gray-700">Description:</label>
+                    <label for="description" class="block text-sm font-medium text-gray-700">{{ __('global.description') }}:</label>
                     <textarea id="description" name="description" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{{ old('description') }}</textarea>
                 </div>
                 <div>
@@ -72,12 +61,12 @@
                         <div class="text-red-500 mt-2 text-sm">The images field is required.</div>
                     @endif
                     <p class="text-green-600 font-semibold mb-4">
-                        0 of {{ $maxImages }} photos used!
+                        0 {{ __('global.of') }} {{ $maxImages }} {{ __('advert.photos') }} {{ __('advert.used') }}!
                     </p>
                     <div class="border-2 border-dashed border-gray-300 p-4 mb-4 text-center cursor-pointer hover:bg-gray-100">
-                        <input type="file" id="images" name="images[]" accept="image/*" class="hidden" multiple data-max-images="{{ $maxImages }}">>
+                        <input type="file" id="images" name="images[]" accept="image/*" class="hidden" multiple data-max-images="{{ $maxImages }}">
                         <label for="images" class="text-gray-500">
-                            Click or drag to upload a photo
+                            {{__('advert.Click_or_drag_to_upload_a_photo')}}
                         </label>
                     </div>
                 </div>
@@ -99,7 +88,7 @@
                         @error('price')
                         <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
                         @enderror
-                        <label for="price" class="block text-sm font-medium text-gray-700">Price:</label>
+                        <label for="price" class="block text-sm font-medium text-gray-700">{{__('advert.price')}}:</label>
                         <input type="number" id="price" name="price" value="{{ old('price') }}" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     </div>
                 </div>
@@ -107,7 +96,7 @@
                     @error('starting_price')
                     <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
                     @enderror
-                    <label for="starting_price" class="block text-sm font-medium text-gray-700">Starting Price:</label>
+                    <label for="starting_price" class="block text-sm font-medium text-gray-700">{{__('advert.attributes.starting_price')}}:</label>
                     <input type="number" id="starting_price" name="starting_price" value="{{ old('starting_price') }}" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
                 <div x-show="advertType === 'Auction'">
@@ -115,14 +104,14 @@
                         @error('start_date')
                         <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
                         @enderror
-                        <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date:</label>
+                        <label for="start_date" class="block text-sm font-medium text-gray-700">{{__('advert.attributes.start_date')}}:</label>
                         <input type="datetime-local" id="start_date" name="start_date" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     </div>
                     <div>
                         @error('end_date')
                         <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
                         @enderror
-                        <label for="end_date" class="block text-sm font-medium text-gray-700">End Date:</label>
+                        <label for="end_date" class="block text-sm font-medium text-gray-700">{{__('advert.attributes.end_date')}}:</label>
                         <input type="datetime-local" id="end_date" name="end_date" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     </div>
                 </div>
@@ -130,7 +119,7 @@
 
                 </div>
                 <div>
-                    <input type="submit" value="Submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <input type="submit" value="{{__('global.submit')}}" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 </div>
             </form>
         </div>
