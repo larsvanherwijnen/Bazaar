@@ -27,5 +27,5 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/register', [RegisterController::class, 'create'])->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
 Route::get('/logout', [LogoutController::class, 'logout'])->name('logout')->middleware('auth');
-Route::get('/advert/create', [AdvertController::class,'createAdvert'])->name('advert.create');
-Route::post('/advert/store', [AdvertController::class,'storeAdvert'])->name('advert.store');
+
+Route::resource('adverts', AdvertController::class);

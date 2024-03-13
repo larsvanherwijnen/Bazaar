@@ -3,48 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Enum\AdvertType;
+use App\Http\Requests\StoreAdvertRequest;
 use App\Models\Advert;
 use App\Models\AdvertImage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\ResponseFactory;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class AdvertController extends Controller
 {
     const MAX_IMAGES = 5;
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
 
-    public function createAdvert(): View
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(): View
     {
         $types = AdvertType::cases();
         $maxImages = self::MAX_IMAGES;
         return view('advert.create', compact('types', 'maxImages'));
     }
 
-    public function storeAdvert(Request $request) : RedirectResponse
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreAdvertRequest $request) : RedirectResponse
     {
-        $validatedData = $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'type' => 'required',
-            'images' => 'required|array|max:' . self::MAX_IMAGES,
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8192',
-            'price' => $request->type === 'Sale' || $request->type === 'Rental' ? 'required' : 'nullable',
-            'starting_price' => $request->type === 'Auction' || $request->type === 'Bidding' ? 'required' : 'nullable',
-            'start_date' => $request->type === 'Auction' ? 'required|date' : 'nullable',
-            'end_date' => $request->type === 'Auction' ? 'required|date|after:start_date' : 'nullable',
-        ], [
-            'title' => __('validation.required', ['attribute' => __('advert.attributes.title')]),
-            'description' => __('validation.required', ['attribute' => __('advert.attributes.description')]),
-            'type' => __('validation.required', ['attribute' => __('advert.attributes.type')]),
-            'images' => __('validation.required', ['attribute' => __('advert.attributes.images')]),
-            'price' => __('validation.required', ['attribute' => __('advert.attributes.price')]),
-            'starting_price' => __('validation.required', ['attribute' => __('advert.attributes.starting_price')]),
-            'start_date' => __('validation.required', ['attribute' => __('advert.attributes.start_date')]),
-            'end_date' => __('validation.required', ['attribute' => __('advert.attributes.end_date')]),
-        ]);
-
         $advert = new Advert();
         $advert->title = $request->title;
         $advert->description = $request->description;
@@ -78,5 +69,37 @@ class AdvertController extends Controller
         }
 
         return redirect()->route('home');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }
