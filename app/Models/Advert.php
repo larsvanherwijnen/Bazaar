@@ -24,4 +24,9 @@ class Advert extends Model
     {
         return $this->hasMany(AdvertImage::class);
     }
+
+    public function getEndDateAttribute() : string
+    {
+        return $this->attributes['expiry_date'];
+    }
 }

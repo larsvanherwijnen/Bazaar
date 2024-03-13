@@ -16,7 +16,7 @@ class AdvertController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() : void
     {
         //
     }
@@ -58,8 +58,9 @@ class AdvertController extends Controller
         $advert->save();
 
         if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $name = time() . '_' . $image->getClientOriginalName();
+            $images = $request->file('images');
+            $images = is_array($images) ? $images : [$images];
+            foreach ($images as $image) {                $name = time() . '_' . $image->getClientOriginalName();
                 $path = $image->move(public_path('storage/images'), $name);
                 $advertImage = new AdvertImage();
                 $advertImage->advert_id = $advert->id;
@@ -74,7 +75,7 @@ class AdvertController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id) : void
     {
         //
     }
@@ -82,7 +83,7 @@ class AdvertController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id) : void
     {
         //
     }
@@ -90,7 +91,7 @@ class AdvertController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id) : void
     {
         //
     }
@@ -98,7 +99,7 @@ class AdvertController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id) : void
     {
         //
     }
