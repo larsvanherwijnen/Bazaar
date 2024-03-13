@@ -10,7 +10,6 @@ class Company extends Model
 {
     use HasFactory, HasUuids;
 
-
     /**
      * The attributes that are mass assignable.
      *
@@ -25,5 +24,4 @@ class Company extends Model
     protected $casts = [
         'config' => 'collection',
     ];
-
 }

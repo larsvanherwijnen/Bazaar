@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Enum\RolesEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -15,6 +16,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, HasUuids, Notifiable;
 
     protected $with = ['company'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -49,8 +51,13 @@ class User extends Authenticatable
         'type' => RolesEnum::class,
     ];
 
-    public function company()
+    public function company(): HasOne
     {
         return $this->hasOne(Company::class);
+    }
+
+    public function contract(): HasOne
+    {
+        return $this->hasOne(Contract::class);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 return [
     'private' => 'Privé',
     'business' => 'Zakelijk',

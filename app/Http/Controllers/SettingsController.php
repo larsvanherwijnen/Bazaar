@@ -3,17 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SettingsFormRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class SettingsController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         return view('settings')->with(['company' => auth()->user()->company]);
     }
 
-    public function update(SettingsFormRequest $request)
+    public function update(SettingsFormRequest $request): RedirectResponse
     {
         $user = $request->user();
 
@@ -22,14 +25,12 @@ class SettingsController extends Controller
 
             if ($company->config) {
                 $config = $company->config->merge($request->only(['description']));
-            }
-            else {
+            } else {
                 $config = collect($request->only(['description']));
             }
 
-
-            $config = $this->uploadFile($request->file('logo'),$config, 'logo', $company);
-            $config = $this->uploadFile($request->file('banner'), $config, 'banner', $company);
+            $config = $this->uploadFile($request, $config, 'logo', 'images');
+            $config = $this->uploadFile($request, $config, 'banner', 'images');
 
             $company->update(['config' => $config]);
         }
@@ -39,19 +40,26 @@ class SettingsController extends Controller
         return redirect()->route('my-account.settings');
     }
 
-    private function uploadFile($file, $config, $fieldName)
+    /**
+     * Upload a file and return the new config.
+     */
+    private function uploadFile(SettingsFormRequest $request, Collection $config, string $fileName, string $folder, string $disk = 'public'): Collection
     {
-        if (!$file) {
+        $file = $request->file($fileName);
+
+        if (! $file) {
             return $config;
         }
 
-        if ($config->get($fieldName)) {
-            Storage::delete($config->get($fieldName));
+        if ($config->get($fileName)) {
+            Storage::delete($config->get($fileName));
         }
 
         $url = Auth::user()->url;
-        $fileLocation = "public/$url/images";
+        $fileLocation = "$disk/$url/$folder";
+        /** @phpstan-ignore-next-line */
         $filePath = Storage::put($fileLocation, $file, 'public');
-        return $config->merge([$fieldName => $filePath]);
+
+        return $config->merge([$fileName => $filePath]);
     }
 }
