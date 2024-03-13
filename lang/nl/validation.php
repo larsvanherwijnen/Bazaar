@@ -13,7 +13,6 @@ return [
     |
     */
 
-
     'accepted' => 'Het veld :attribute moet worden geaccepteerd.',
     'accepted_if' => 'Het veld :attribute moet worden geaccepteerd wanneer :other :value is.',
     'active_url' => 'Het veld :attribute moet een geldige URL zijn.',
@@ -203,5 +202,4 @@ return [
         'start_date' => 'startdatum',
         'end_date' => 'einddatum',
     ],
-    ];
-
+];

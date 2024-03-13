@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Advert;
-use App\Models\AdvertImage;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $adverts = Advert::with('advertImages')->get();
 
         return view('home', ['adverts' => $adverts]);
     }
-    public function search(Request $request): \Illuminate\View\View
+
+    public function search(Request $request): View
     {
         $min_price = $request->get('min_price');
         $max_price = $request->get('max_price');
@@ -31,7 +32,7 @@ class HomeController extends Controller
         }
 
         if ($query) {
-            $adverts->where('title', 'like', '%' . $query . '%');
+            $adverts->where('title', 'like', '%'.$query.'%');
         }
 
         $adverts = $adverts->get();
