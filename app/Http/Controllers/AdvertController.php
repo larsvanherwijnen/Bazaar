@@ -13,10 +13,11 @@ use Illuminate\View\View;
 class AdvertController extends Controller
 {
     const MAX_IMAGES = 5;
+
     /**
      * Display a listing of the resource.
      */
-    public function index() : void
+    public function index(): void
     {
         //
     }
@@ -28,13 +29,14 @@ class AdvertController extends Controller
     {
         $types = AdvertType::cases();
         $maxImages = self::MAX_IMAGES;
+
         return view('advert.create', compact('types', 'maxImages'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAdvertRequest $request) : RedirectResponse
+    public function store(StoreAdvertRequest $request): RedirectResponse
     {
         $advert = new Advert();
         $advert->title = $request->title;
@@ -60,7 +62,8 @@ class AdvertController extends Controller
         if ($request->hasFile('images')) {
             $images = $request->file('images');
             $images = is_array($images) ? $images : [$images];
-            foreach ($images as $image) {                $name = time() . '_' . $image->getClientOriginalName();
+            foreach ($images as $image) {
+                $name = time().'_'.$image->getClientOriginalName();
                 $path = $image->move(public_path('storage/images'), $name);
                 $advertImage = new AdvertImage();
                 $advertImage->advert_id = $advert->id;
@@ -75,7 +78,7 @@ class AdvertController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id) : void
+    public function show(string $id): void
     {
         //
     }
@@ -83,7 +86,7 @@ class AdvertController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id) : void
+    public function edit(string $id): void
     {
         //
     }
@@ -91,7 +94,7 @@ class AdvertController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) : void
+    public function update(Request $request, string $id): void
     {
         //
     }
@@ -99,7 +102,7 @@ class AdvertController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id) : void
+    public function destroy(string $id): void
     {
         //
     }

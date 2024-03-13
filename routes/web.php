@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\AdvertController;
 use App\Enum\RolesEnum;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ContractController;
+use App\Http\Controllers\AdvertController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;

@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Enum\AdvertType;
 use App\Enum\RolesEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;

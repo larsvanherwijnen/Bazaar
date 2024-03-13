@@ -27,7 +27,7 @@ class StoreAdvertRequest extends FormRequest
             'title' => 'required',
             'description' => 'required',
             'type' => 'required',
-            'images' => 'required|array|max:' . AdvertController::MAX_IMAGES,
+            'images' => 'required|array|max:'.AdvertController::MAX_IMAGES,
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8192',
             'price' => 'required_if:type,Sale,Rental',
             'starting_price' => 'required_if:type,Auction,Bidding',
