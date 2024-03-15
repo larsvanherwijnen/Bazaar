@@ -41,7 +41,7 @@ class AdvertController extends Controller
             $validated = $request->safe()->except('price', 'start_date', 'end_date');
         }
 
-        if ($validated['type'] === AdvertType::AUCTION){
+        if ($validated['type'] === AdvertType::AUCTION) {
             $validated = $request->safe()->except('price');
         }
 
@@ -88,7 +88,7 @@ class AdvertController extends Controller
             $validated = $request->safe()->except('price', 'start_date', 'end_date');
         }
 
-        if ($validated['type'] === AdvertType::AUCTION){
+        if ($validated['type'] === AdvertType::AUCTION) {
             $validated = $request->safe()->except('price');
         }
 
