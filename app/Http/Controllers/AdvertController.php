@@ -6,7 +6,6 @@ use App\Enum\AdvertType;
 use App\Http\Requests\StoreAdvertRequest;
 use App\Models\Advert;
 use App\Models\AdvertImage;
-use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -41,6 +40,7 @@ class AdvertController extends Controller
         $this->setAdvertProperties($advert, $request);
         $advert->save();
         $this->handleImageUpload($request, $advert);
+
         return redirect()->route('home');
     }
 
@@ -67,14 +67,15 @@ class AdvertController extends Controller
     /**
      * Update the specified resource in storage.
      */
-   public function update(Request $request, string $id): RedirectResponse
-{
-    $advert = Advert::findOrFail($id);
-    $this->setAdvertProperties($advert, $request);
-    $advert->save();
-    $this->handleImageUpload($request, $advert);
-    return redirect()->route('home');
-}
+    public function update(Request $request, string $id): RedirectResponse
+    {
+        $advert = Advert::findOrFail($id);
+        $this->setAdvertProperties($advert, $request);
+        $advert->save();
+        $this->handleImageUpload($request, $advert);
+
+        return redirect()->route('home');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -86,7 +87,6 @@ class AdvertController extends Controller
 
         return redirect()->route('home');
     }
-
 
     private function setAdvertProperties(Advert $advert, Request $request): void
     {
@@ -104,6 +104,7 @@ class AdvertController extends Controller
             }
         }
     }
+
     private function handleImageUpload(Request $request, Advert $advert): void
     {
         if ($request->hasFile('images')) {
