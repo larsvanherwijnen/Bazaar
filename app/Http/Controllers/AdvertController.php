@@ -6,14 +6,13 @@ use App\Enum\AdvertType;
 use App\Http\Requests\StoreAdvertRequest;
 use App\Models\Advert;
 use App\Models\AdvertImage;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AdvertController extends Controller
 {
-    const MAX_IMAGES = 5;
-
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +27,7 @@ class AdvertController extends Controller
     public function create(): View
     {
         $types = AdvertType::cases();
-        $maxImages = self::MAX_IMAGES;
+        $maxImages = 5;
 
         return view('advert.create', compact('types', 'maxImages'));
     }
@@ -39,39 +38,9 @@ class AdvertController extends Controller
     public function store(StoreAdvertRequest $request): RedirectResponse
     {
         $advert = new Advert();
-        $advert->title = $request->title;
-        $advert->description = $request->description;
-        $advert->type = $request->type;
-
-        if ($request->type === 'Sale' || $request->type === 'Rental') {
-            $advert->price = $request->price;
-        } else {
-            $advert->starting_price = $request->starting_price;
-            if ($request->type === 'Auction') {
-                if ($advert->price) {
-                    // Throw an error or handle this situation as you see fit
-                    throw new \Exception('Auction type cannot have a sale price');
-                }
-                $advert->start_date = $request->start_date;
-                $advert->end_date = $request->end_date;
-            }
-        }
-
+        $this->setAdvertProperties($advert, $request);
         $advert->save();
-
-        if ($request->hasFile('images')) {
-            $images = $request->file('images');
-            $images = is_array($images) ? $images : [$images];
-            foreach ($images as $image) {
-                $name = time().'_'.$image->getClientOriginalName();
-                $path = $image->move(public_path('storage/images'), $name);
-                $advertImage = new AdvertImage();
-                $advertImage->advert_id = $advert->id;
-                $advertImage->path = $name;
-                $advertImage->save();
-            }
-        }
-
+        $this->handleImageUpload($request, $advert);
         return redirect()->route('home');
     }
 
@@ -86,24 +55,68 @@ class AdvertController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id): void
+    public function edit(string $id): View
     {
-        //
+        $advert = Advert::find($id);
+        $types = AdvertType::cases();
+        $maxImages = 5;
+
+        return view('advert.edit', compact('advert', 'types', 'maxImages'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): void
-    {
-        //
-    }
+   public function update(Request $request, string $id): RedirectResponse
+{
+    $advert = Advert::findOrFail($id);
+    $this->setAdvertProperties($advert, $request);
+    $advert->save();
+    $this->handleImageUpload($request, $advert);
+    return redirect()->route('home');
+}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): void
+    public function destroy(string $id): RedirectResponse
     {
-        //
+        $advert = Advert::findOrFail($id);
+        $advert->delete();
+
+        return redirect()->route('home');
+    }
+
+
+    private function setAdvertProperties(Advert $advert, Request $request): void
+    {
+        $advert->title = $request->title;
+        $advert->description = $request->description;
+        $advert->type = $request->type;
+
+        if ($request->type === 'Sale' || $request->type === 'Rental') {
+            $advert->price = $request->price;
+        } else {
+            $advert->starting_price = $request->starting_price;
+            if ($request->type === 'Auction') {
+                $advert->start_date = $request->start_date;
+                $advert->end_date = $request->end_date;
+            }
+        }
+    }
+    private function handleImageUpload(Request $request, Advert $advert): void
+    {
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
+            $images = is_array($images) ? $images : [$images];
+            foreach ($images as $image) {
+                $name = time().'_'.$image->getClientOriginalName();
+                $path = $image->move(public_path('storage/images'), $name);
+                $advertImage = new AdvertImage();
+                $advertImage->advert_id = $advert->id;
+                $advertImage->path = $name;
+                $advertImage->save();
+            }
+        }
     }
 }
