@@ -36,8 +36,20 @@ class AdvertController extends Controller
      */
     public function store(StoreAdvertRequest $request): RedirectResponse
     {
+        $validated = $request->validated();
+        if ($validated['type'] === AdvertType::BIDDING) {
+            $validated = $request->safe()->except('price', 'start_date', 'end_date');
+        }
+
+        if ($validated['type'] === AdvertType::AUCTION){
+            $validated = $request->safe()->except('price');
+        }
+
+        if ($validated['type'] === AdvertType::SALE || $validated['type'] === AdvertType::RENTAL) {
+            $validated = $request->safe()->except('starting_price', 'start_date', 'end_date');
+        }
         $advert = new Advert();
-        $this->setAdvertProperties($advert, $request);
+        $advert->fill($validated);
         $advert->save();
         $this->handleImageUpload($request, $advert);
 
@@ -67,10 +79,23 @@ class AdvertController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(StoreAdvertRequest $request, string $id): RedirectResponse
     {
         $advert = Advert::findOrFail($id);
-        $this->setAdvertProperties($advert, $request);
+        $validated = $request->validated();
+
+        if ($validated['type'] === AdvertType::BIDDING) {
+            $validated = $request->safe()->except('price', 'start_date', 'end_date');
+        }
+
+        if ($validated['type'] === AdvertType::AUCTION){
+            $validated = $request->safe()->except('price');
+        }
+
+        if ($validated['type'] === AdvertType::SALE || $validated['type'] === AdvertType::RENTAL) {
+            $validated = $request->safe()->except('starting_price', 'start_date', 'end_date');
+        }
+        $advert->update($validated);
         $advert->save();
         $this->handleImageUpload($request, $advert);
 
@@ -88,23 +113,6 @@ class AdvertController extends Controller
         return redirect()->route('home');
     }
 
-    private function setAdvertProperties(Advert $advert, Request $request): void
-    {
-        $advert->title = $request->title;
-        $advert->description = $request->description;
-        $advert->type = $request->type;
-
-        if ($request->type === 'Sale' || $request->type === 'Rental') {
-            $advert->price = $request->price;
-        } else {
-            $advert->starting_price = $request->starting_price;
-            if ($request->type === 'Auction') {
-                $advert->start_date = $request->start_date;
-                $advert->end_date = $request->end_date;
-            }
-        }
-    }
-
     private function handleImageUpload(Request $request, Advert $advert): void
     {
         if ($request->hasFile('images')) {
@@ -112,7 +120,7 @@ class AdvertController extends Controller
             $images = is_array($images) ? $images : [$images];
             foreach ($images as $image) {
                 $name = time().'_'.$image->getClientOriginalName();
-                $path = $image->move(public_path('storage/images'), $name);
+                $image->move(public_path('storage/images'), $name);
                 $advertImage = new AdvertImage();
                 $advertImage->advert_id = $advert->id;
                 $advertImage->path = $name;
