@@ -192,6 +192,14 @@ return [
         'password' => 'wachtwoord',
         'companyName' => 'bedrijfsnaam',
         'kvk' => 'kvk nummer',
-    ],
 
+        'title' => 'titel',
+        'description' => 'omschrijving',
+        'type' => 'type',
+        'images' => 'afbeeldingen',
+        'price' => 'prijs',
+        'starting_price' => 'startprijs',
+        'start_date' => 'startdatum',
+        'end_date' => 'einddatum',
+    ],
 ];

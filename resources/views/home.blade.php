@@ -33,7 +33,7 @@
                     <div class="mb-2 overflow-hidden overflow-ellipsis">
                         <h2 class="text-xl font-bold whitespace-nowrap">{{ Str::limit($advert->title, 50) }}</h2>
                     </div>
-                    <img src="{{ $advert->advertImages->first() ? asset($advert->advertImages->first()->path) : asset('images/img.png') }}" alt="Advert Image" class="w-full h-64 object-cover mb-4">
+                    <img src="{{ $advert->advertImages->first() ? Storage::url('images/' . $advert->advertImages->first()->path) : Storage::url('images/img.png') }}" alt="Advert Image" class="w-full h-64 object-cover mb-4">
                     <p class="text-lg font-semibold">€{{ $advert->price }}</p>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 use App\Enum\RolesEnum;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ContractController;
+use App\Http\Controllers\AdvertController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -36,3 +37,5 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/register', [RegisterController::class, 'create'])->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
 Route::get('/logout', [LogoutController::class, 'logout'])->name('logout')->middleware('auth');
+
+Route::resource('adverts', AdvertController::class);

@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Enum\AdvertType;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Advert extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     public $incrementing = false;
 
@@ -22,5 +23,10 @@ class Advert extends Model
     public function advertImages(): HasMany
     {
         return $this->hasMany(AdvertImage::class);
+    }
+
+    public function getEndDateAttribute(): string
+    {
+        return $this->attributes['expiry_date'];
     }
 }

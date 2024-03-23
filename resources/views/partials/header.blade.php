@@ -17,7 +17,7 @@
                     <a href="{{ route('login')}}" class="text-sm"><i class="fa fa-user mr-2"></i>{{ __('auth.login') }}
                     </a>
                 @endif
-                <a href="" class="bg-blue-400 rounded p-2 text-sm"><i class="fa-solid fa-thumbtack mr-2"></i>{{ __('global.advertise') }}</a>
+                <a href="{{ route('adverts.create') }}" class="bg-blue-400 rounded p-2 text-sm"><i class="fa-solid fa-thumbtack mr-2"></i>{{ __('global.advertise') }}</a>
             </div>
         </div>
     </div>
