@@ -5,6 +5,7 @@ return [
     'search' => 'Search',
     'advertise' => 'Place an advert',
     'settings' => 'Settings',
+    'profile' => 'Profile',
     'my_bazaar' => 'My Bazaar',
     'save' => 'Save',
     'description' => 'Description',
@@ -18,4 +19,6 @@ return [
     'approve_contract' => 'Approve contract',
     'export_contract' => 'Export contract',
     'contract_approved' => 'Contract approved',
+    'my_adverts' => 'My adverts',
+    'related_adverts' => 'Related adverts',
 ];

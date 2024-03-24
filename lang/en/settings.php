@@ -6,4 +6,5 @@ return [
     'secondary_color' => 'Secondary color',
     'logo' => 'Logo',
     'banner' => 'Banner',
+    'my_details' => 'My details',
 ];

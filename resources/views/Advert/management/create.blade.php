@@ -4,7 +4,8 @@
     <div class="flex justify-center mt-20">
         <div class="bg-white p-10 rounded shadow-md w-1/3">
             <h1 class="text-2xl mb-6 text-center">{{ __('advert.create_advert') }}</h1>
-            <form method="post" action="{{ route('adverts.store') }}" enctype="multipart/form-data" class="space-y-4" x-data="{ advertType: '{{ old('type', 'Sale') }}' }">                @csrf
+            <form method="post" action="{{ route('adverts.store') }}" enctype="multipart/form-data" class="space-y-4" x-data="{ advertType: '{{ old('type', 'Sale') }}' }">
+                @csrf
                 <input type="hidden" id="type" name="type" x-model="advertType">
                 <div class="flex items-center space-x-4">
                     <div class="w-1/3 bg-gray-200 rounded flex flex-col items-center py-3"

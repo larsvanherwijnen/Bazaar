@@ -10,8 +10,8 @@ class ProfileController extends Controller
     /**
      * Show the profile for the given user.
      */
-    public function __invoke(string $slug): View
+    public function __invoke(string $url): View
     {
-        return view('profile', ['user' => User::where('url', $slug)->first()]);
+        return view('profile', ['user' => User::where('url', $url)->first()]);
     }
 }

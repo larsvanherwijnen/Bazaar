@@ -8,6 +8,7 @@ use App\Http\Requests\RegistrationFormRequest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -25,26 +26,26 @@ class RegisterController extends Controller
 
     public function store(RegistrationFormRequest $request): RedirectResponse
     {
-        if ($request->validated()) {
-            DB::transaction(function () use ($request) {
-                $user = User::create([
-                    'name' => $request->username,
-                    'email' => $request->email,
-                    'password' => Hash::Make($request->password),
-                    'type' => RolesEnum::fromString($request->account_type),
-                    'url' => $request->url ?? Str::slug($request->username),
+        DB::transaction(function () use ($request) {
+            $user = User::create([
+                'name' => $request->username,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'type' => RolesEnum::fromString($request->account_type),
+                'url' => $request->url ?? Str::slug($request->username),
+            ]);
+
+            if ($user->type == RolesEnum::BUSINESS) {
+                $company = new Company([
+                    'name' => $request->companyName,
+                    'kvk' => $request->kvk,
                 ]);
 
-                if ($user->type == RolesEnum::BUSINESS) {
-                    $company = new Company([
-                        'name' => $request->companyName,
-                        'kvk' => $request->kvk,
-                    ]);
+                $user->company()->save($company);
+            }
 
-                    $user->company()->save($company);
-                }
-            });
-        }
+            Auth::login($user);
+        });
 
         return redirect()->route('login');
     }

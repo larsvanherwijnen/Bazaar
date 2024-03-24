@@ -22,6 +22,7 @@ class StoreAdvertRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             'title' => 'required',
             'description' => 'required',
@@ -30,8 +31,10 @@ class StoreAdvertRequest extends FormRequest
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:8192',
             'price' => 'required_if:type,Sale,Rental',
             'starting_price' => 'required_if:type,Auction,Bidding',
-            'start_date' => 'required_if:type,Auction|date',
-            'end_date' => 'required_if:type,Auction|date|after:start_date',
+            'start_date' => 'nullable|required_if:type,Auction|date',
+            'end_date' => 'nullable|required_if:type,Auction|date|after:start_date',
         ];
+
+
     }
 }

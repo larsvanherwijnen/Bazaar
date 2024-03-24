@@ -4,6 +4,15 @@
     @include('partials.my_account_header')
 
     <div class="flex w-1/2 mx-auto pt-8 px-4">
+
+        <div class="bg-white rounded w-full p-4">
+            <h1 class="text-3xl font-bold mb-4">{{ __('settings.my_details') }}</h1>
+            <div>
+                <p>Name: {{ auth()->user()->name }}</p>
+                <p> Email: {{ auth()->user()->email }}</p>
+            </div>
+
+        </div>
         @if(auth()->user()->type->isBusiness())
             <div class="bg-white rounded w-full p-4">
                 <h1 class="text-3xl font-bold mb-4">{{ __('settings.business_configuration') }}</h1>
@@ -20,7 +29,8 @@
                            for="banner">{{ __('settings.banner') }}</label>
                     <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
                            name="banner" id="file_input" type="file" accept="image/png, image/gif, image/jpeg">
-                    <img src="{{ Storage::url($company->config?->get('banner')) }}" alt="" class="h-24 w-24 object-cover">
+                    <img src="{{ Storage::url($company->config?->get('banner')) }}" alt=""
+                         class="h-24 w-24 object-cover">
 
                     <div class="w-96">
                         <div class="relative w-full min-w-[200px]">
