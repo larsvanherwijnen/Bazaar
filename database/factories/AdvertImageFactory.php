@@ -2,19 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\AdvertImage;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class AdvertImageFactory extends Factory
 {
-    protected $model = AdvertImage::class;
-
     public function definition()
     {
         return [
-            'id' => (string) Str::uuid(),
-            'path' => $this->faker->imageUrl(),
+            'path' => $this->faker->image(public_path('storage/images'), 500, 500, null, false),
         ];
     }
 }
