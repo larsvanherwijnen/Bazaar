@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\View\View;
+use Psy\Readline\Hoa\Console;
 
 class ProfileController extends Controller
 {
@@ -12,6 +14,8 @@ class ProfileController extends Controller
      */
     public function __invoke(string $slug): View
     {
-        return view('profile', ['user' => User::where('url', $slug)->first()]);
+        $user = User::where('url', $slug)->first();
+        $averageRating = Review::where('user_id', $user->id)->average('rating');
+return view('profile', ['user' => $user, 'averageRating' => $averageRating]);
     }
 }
