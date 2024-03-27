@@ -16,7 +16,7 @@ class AdvertSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(['type' => RolesEnum::PRIVATE_WITH_ADVERTISING])->has(Advert::factory()->has(AdvertImage::factory(2))->count(rand(1,5)))->create();
-        User::factory(['type' => RolesEnum::BUSINESS])->has(Company::factory())->has(Advert::factory()->has(AdvertImage::factory(2))->count(rand(1,5)))->create();
+        User::factory(['type' => RolesEnum::PRIVATE_WITH_ADVERTISING])->has(Advert::factory()->has(AdvertImage::factory(2))->count(rand(1, 5)))->create();
+        User::factory(['type' => RolesEnum::BUSINESS])->has(Company::factory())->has(Advert::factory()->has(AdvertImage::factory(2))->count(rand(1, 5)))->create();
     }
 }

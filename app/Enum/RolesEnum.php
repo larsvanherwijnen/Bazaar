@@ -49,7 +49,8 @@ enum RolesEnum: int
         ];
     }
 
-    public function getLabel(): string {
+    public function getLabel(): string
+    {
         return match ($this) {
             self::PRIVATE_WITHOUT_ADVERTISING => __('advert.bidding'),
             self::PRIVATE_WITH_ADVERTISING => __('advert.auction'),
@@ -58,7 +59,8 @@ enum RolesEnum: int
         };
     }
 
-    public function getIcon(): string {
+    public function getIcon(): string
+    {
         return match ($this) {
             self::PRIVATE_WITHOUT_ADVERTISING => 'fa-user',
             self::PRIVATE_WITH_ADVERTISING => 'fa-user',

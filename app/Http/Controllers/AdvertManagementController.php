@@ -52,10 +52,9 @@ class AdvertManagementController extends Controller
         $advert->fill($validated);
         auth()->user()->adverts()->save($advert);
         $this->handleImageUpload($request, $advert);
-        
+
         return redirect()->route('home');
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -65,6 +64,7 @@ class AdvertManagementController extends Controller
         $types = AdvertType::cases();
         $maxImages = 5;
         $advert->load('advertImages');
+
         return view('advert.management.edit', compact('advert', 'types', 'maxImages'));
     }
 

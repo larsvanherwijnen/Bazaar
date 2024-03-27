@@ -18,5 +18,4 @@ class AdvertImage extends Model
     protected $fillable = [
         'path',
     ];
-
 }

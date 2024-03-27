@@ -10,7 +10,8 @@ enum AdvertType: string
     case BIDDING = 'Bidding';
     case RENTAL = 'Rental';
 
-    public function getLabel(): string {
+    public function getLabel(): string
+    {
         return match ($this) {
             self::BIDDING => __('advert.bidding'),
             self::AUCTION => __('advert.auction'),
@@ -19,7 +20,8 @@ enum AdvertType: string
         };
     }
 
-    public function getIcon(): string {
+    public function getIcon(): string
+    {
         return match ($this) {
             self::BIDDING => 'fa-building',
             self::AUCTION => 'fa-gavel',

@@ -9,11 +9,12 @@ use Livewire\Component;
 
 class bidding extends Component
 {
-
     public Advert $advert;
+
     #[Validate('required|min:0.01|max:999999.99')]
     public float $amount;
-    public function save() : void
+
+    public function save(): void
     {
         $this->validate();
 
@@ -24,11 +25,10 @@ class bidding extends Component
 
     }
 
-    public function render() : View
+    public function render(): View
     {
         $bids = $this->advert->bids->collect()->sortByDesc('created_at');
 
         return view('livewire.bidding')->with('bids', $bids);
     }
-
 }

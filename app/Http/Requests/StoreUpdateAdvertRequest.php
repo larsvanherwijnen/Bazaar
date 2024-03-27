@@ -34,6 +34,5 @@ class StoreUpdateAdvertRequest extends FormRequest
             'end_date' => 'nullable|required_if:type,Auction|date|after:start_date',
         ];
 
-
     }
 }

@@ -2,10 +2,8 @@
 
 namespace Tests\Browser;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
-use const _PHPStan_de1c07ea6\__;
 
 class RegisterTest extends DuskTestCase
 {
@@ -77,8 +75,4 @@ class RegisterTest extends DuskTestCase
                 ->assertSee(__('auth.login'));
         });
     }
-
-
-
-
 }
