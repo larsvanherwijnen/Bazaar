@@ -8,41 +8,47 @@
             @include('auth.partials.page_switcher')
             <h1 class="text-2xl font-bold">{{ __('registration.account_type') }}</h1>
             <span class="text-sm">{{ __('registration.account_type_explanation') }}</span>
-            <div class="flex items-center space-x-4">
-                <div class="w-1/3 bg-gray-200 rounded flex flex-col items-center py-3"
-                     :class="{ 'border-2 border-blue-500': accountType === 'private_without_advertising'}"
-                     @click="accountType = 'private_without_advertising'">
-                    <i class="fa-solid fa-user text-2xl"></i>
-                    <div class="flex flex-col text-center">
-                        <span>{{ __('registration.private') }}</span>
-                        <span class="text-xs">{{ __('registration.private_without_advertising') }}</span>
-                    </div>
-                </div>
-                <div class="w-1/3 bg-gray-200  rounded flex flex-col items-center py-3"
-                     :class="{ 'border-2 border-blue-500': accountType === 'private_with_advertising'}"
-                     @click="accountType = 'private_with_advertising'">
-                    <i class="fa-solid fa-user text-2xl"></i>
-                    <div class="flex flex-col text-center">
-                        <span>{{ __('registration.private') }}</span>
-                        <span class="text-xs">{{ __('registration.private_with_advertising') }}</span>
-                    </div>
-                </div>
-                <div class="w-1/3 bg-gray-200 rounded flex flex-col items-center py-3"
-                     :class="{ 'border-2 border-blue-500': accountType === 'business'}"
-                     @click="accountType = 'business'">
-                    <i class="fa-solid fa-building text-2xl"></i>
-                    <div class="flex flex-col text-center">
-                        <span>{{ __('registration.business') }}</span>
-                        <span class="text-xs">{{ __('registration.business_explanation') }}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="border-b-2 border-gray-500">
-            </div>
-            {{ __('registration.account_information') }}
             <form method="POST" action="{{ route('register') }}" class="w-full space-y-4">
                 @csrf
-                <input type="hidden" name="account_type" x-model="accountType">
+                <div class="flex items-center space-x-4">
+                    <div class="w-1/3 bg-gray-200 rounded flex flex-col items-center py-3 "
+                         :class="{ 'border-2 border-blue-500': accountType === 'private_without_advertising'}">
+                        <input type="checkbox" id="private_without_advertising" name="account_type"
+                               value="private_without_advertising" class="hidden"
+                               @click="accountType = 'private_without_advertising'">
+                        <label for="private_without_advertising" class="flex flex-col text-center">
+                            <i class="fa-solid fa-user text-2xl"></i>
+                            <span>{{ __('registration.private') }}</span>
+                            <span class="text-xs">{{ __('registration.private_without_advertising') }}</span>
+                        </label>
+                    </div>
+                    <div class="w-1/3 bg-gray-200 rounded flex flex-col items-center py-3"
+                         :class="{ 'border-2 border-blue-500': accountType === 'private_with_advertising'}">
+                        <input type="checkbox" id="private_with_advertising" name="account_type"
+                               value="private_with_advertising" class="hidden"
+                               @click="accountType = 'private_with_advertising'">
+                        <label for="private_with_advertising" class="flex flex-col text-center">
+                            <i class="fa-solid fa-user text-2xl"></i>
+                            <span>{{ __('registration.private') }}</span>
+                            <span class="text-xs">{{ __('registration.private_with_advertising') }}</span>
+                        </label>
+                    </div>
+                    <div class="w-1/3 bg-gray-200 rounded flex flex-col items-center py-3"
+                         :class="{ 'border-2 border-blue-500': accountType === 'business'}">
+                        <input type="checkbox" id="business" name="account_type" value="business" class="hidden"
+                               @click="accountType = 'business'">
+                        <label for="business" class="flex flex-col text-center">
+                            <i class="fa-solid fa-building text-2xl"></i>
+                            <span>{{ __('registration.business') }}</span>
+                            <span class="text-xs">{{ __('registration.business_explanation') }}</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="border-b-2 border-gray-500">
+                </div>
+                {{ __('registration.account_information') }}
+
                 <div class="flex w-full space-x-4">
                     <div class="mb-5 flex flex-1 flex-col">
                         <label for="name"

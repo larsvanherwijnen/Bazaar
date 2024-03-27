@@ -192,7 +192,6 @@ return [
         'password' => 'wachtwoord',
         'companyName' => 'bedrijfsnaam',
         'kvk' => 'kvk nummer',
-
         'title' => 'titel',
         'description' => 'omschrijving',
         'type' => 'type',
@@ -201,5 +200,6 @@ return [
         'starting_price' => 'startprijs',
         'start_date' => 'startdatum',
         'end_date' => 'einddatum',
+        'amount' => 'bedrag',
     ],
 ];

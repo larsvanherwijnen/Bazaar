@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Enum\RolesEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -59,5 +60,10 @@ class User extends Authenticatable
     public function contract(): HasOne
     {
         return $this->hasOne(Contract::class);
+    }
+
+    public function adverts(): HasMany
+    {
+        return $this->hasMany(Advert::class);
     }
 }
