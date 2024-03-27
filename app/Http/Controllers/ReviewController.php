@@ -6,6 +6,7 @@ use App\Http\Requests\ReviewRequest;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -24,6 +25,15 @@ class ReviewController extends Controller
 
     public function store(ReviewRequest $request) : RedirectResponse
     {
+        $user = Auth::user();
+        $reviewedUser = User::find($request->user_id);
+        $existingReview = $reviewedUser->reviews->firstWhere('reviewer_id', $user->id);
+
+        if ($existingReview) {
+            return back()->withErrors([
+                'rating' => 'You have already reviewed this user',
+            ]);
+        }
         if ($request->validated()) {
             $review = new Review();
             $review->fill($request->validated());
