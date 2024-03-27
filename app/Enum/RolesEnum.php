@@ -39,4 +39,33 @@ enum RolesEnum: int
             default => throw new \InvalidArgumentException("Invalid role: $value"),
         };
     }
+
+    public static function publicRoles(): array
+    {
+        return [
+            self::PRIVATE_WITHOUT_ADVERTISING,
+            self::PRIVATE_WITH_ADVERTISING,
+            self::BUSINESS,
+        ];
+    }
+
+    public function getLabel(): string
+    {
+        return match ($this) {
+            self::PRIVATE_WITHOUT_ADVERTISING => __('advert.bidding'),
+            self::PRIVATE_WITH_ADVERTISING => __('advert.auction'),
+            self::BUSINESS => __('advert.rental'),
+            self::ADMIN => __('advert.sale'),
+        };
+    }
+
+    public function getIcon(): string
+    {
+        return match ($this) {
+            self::PRIVATE_WITHOUT_ADVERTISING => 'fa-user',
+            self::PRIVATE_WITH_ADVERTISING => 'fa-user',
+            self::BUSINESS => 'fa-building',
+            self::ADMIN => 'fa-gavel',
+        };
+    }
 }
