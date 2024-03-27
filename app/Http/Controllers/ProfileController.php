@@ -14,8 +14,11 @@ class ProfileController extends Controller
      */
     public function __invoke(string $url): View
     {
-        $user = User::where('url', $slug)->first();
+        $user = User::where('url', $url)->first();
         $averageRating = Review::where('user_id', $user->id)->average('rating');
-        return view('profile', ['user' => $user, 'averageRating' => $averageRating]);
+        $reviewsCount = $user->reviews->count();
+        $reviews = $user->reviews->whereNotNull('comment');
+
+        return view('profile', ['user' => $user, 'averageRating' => $averageRating, 'reviewsCount' => $reviewsCount, 'reviews' => $reviews]);
     }
 }

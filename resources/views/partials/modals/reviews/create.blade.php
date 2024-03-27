@@ -1,14 +1,17 @@
-<div x-show="openModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+<div x-show="openModal"
+     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
     <div class="bg-white p-6 max-w-md mx-auto rounded-md">
         <h1 class="text-3xl font-bold mb-4">Create Review</h1>
-        <form action="{{ route('reviews.store') }}" method="POST" class="space-y-4">
+        <form id="form1" action="{{ route('reviews.store') }}" method="POST" class="space-y-4">
             @csrf
             <input type="hidden" name="user_id" value="{{ $user->id }}">
             <input type="hidden" name="reviewer_id" value="{{ auth()->id() }}">
+                <p class="text-red-500 rating-error" data-error-message="{{ __('validation.rating_error') }}">
+                    @error('rating')
+                    {{ $message }}
+                    @enderror
+                </p>
             <div class="flex items-center">
-                @foreach ($errors->all() as $error)
-                    <p class="text-red-500">{{ $error }}</p>
-                @endforeach
                 @for ($i = 1; $i <= 5; $i++)
                     <input type="radio" name="rating" id="star{{ $i }}" value="{{ $i }}" class="hidden">
                     <label for="star{{ $i }}" class="text-yellow-400 cursor-pointer text-2xl">&#9734;</label>

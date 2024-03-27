@@ -30,27 +30,31 @@
                     <span class="text-4xl">
                       @if (floor($averageRating) - $i >= 1)
                            <!-- Print a full star -->
-                           &#9733;
-                       @elseif ($averageRating - $i > 0)
+                            <i class="fas fa-star"></i>
+                        @elseif ($averageRating - $i > 0)
                            <!-- Print a half star :( if we can use one -->
-                           &#9734;
+                            <i class="fas fa-star-half-alt"></i>
                        @else
                            <!-- Print an empty star -->
-                           &#9734;
-                       @endif
+                            <i class="far fa-star"></i>
+                        @endif
                     </span>
                     @endfor
                 </div>
+                <div>
+                    <!-- Display the number of reviews -->
+                    <p>{{__('global.reviews') }}: {{ $reviewsCount }}</p>                </div>
             </div>
         @endif
             <div x-data="{openModal: false}">
                 @vite('resources/js/rating.js')
-
-                <!-- Modal Trigger -->
                 <button @click="openModal = true" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Create Review</button>
-
-                <!-- Include the modal component -->
                 @include('partials.modals.reviews.create')
+            </div>
+            <div x-data="{openModal: false}">
+                @vite('resources/js/rating.js')
+                <button @click="openModal = true" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">View Reviews</button>
+                @include('partials.modals.reviews.reviews')
             </div>
 
     </div>

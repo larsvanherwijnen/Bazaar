@@ -23,4 +23,5 @@ return [
     'related_adverts' => 'Related adverts',
     'edit' => 'Edit',
     'delete' => 'Delete',
+    'reviews' => 'Reviews',
 ];

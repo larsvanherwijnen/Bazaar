@@ -14,7 +14,7 @@ class ReviewController extends Controller
     public function index(string $userId) : RedirectResponse
     {
         $user = User::find($userId);
-        return redirect()->route('profile', ['slug' => $user->url]);    }
+        return redirect()->route('profile', ['url' => $user->url]);    }
 
    public function create(User $user) : View
 {

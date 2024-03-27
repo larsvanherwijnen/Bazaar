@@ -10,3 +10,19 @@ document.querySelectorAll('input[name="rating"]').forEach((star, index, starList
         }
     });
 });
+
+    let form = document.querySelector('#form1');
+    form.addEventListener('submit', function (event) {
+        let errorMessage = form.querySelector('.rating-error');
+        const selectedRating = document.querySelector('input[name="rating"]:checked');
+        if (!selectedRating) {
+            event.preventDefault(); // Prevent form submission
+            if (errorMessage) {
+                errorMessage.textContent = errorMessage.dataset.errorMessage;
+            }
+        } else {
+            if (errorMessage) {
+                errorMessage.textContent = ''; // Clear the error message if a rating is selected
+            }
+        }
+    });

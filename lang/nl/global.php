@@ -25,4 +25,5 @@ return [
     'related_adverts' => 'Gerelateerde advertenties',
     'edit' => 'Bewerken',
     'delete' => 'Verwijderen',
+    'reviews' => 'Beoordelingen',
 ];
