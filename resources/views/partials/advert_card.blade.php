@@ -14,8 +14,7 @@
                 <span>€{{ number_format($advert->price, 2, ',', '.') }}</span>
             </div>
             <div class="w-1/4">
-                <a class="mb-2 text-blue-700"
-                   href="{{route('profile', $advert->user->url)}}">{{$advert->user->name}}</a>
+                <a class="mb-2 text-blue-700" href="{{route('profile', $advert->user->url)}}">{{$advert->user->name}}</a>
             </div>
         </div>
     </div>

@@ -14,4 +14,11 @@ return [
     'starting_price' => 'Startprijs',
     'start_date' => 'Startdatum',
     'end_date' => 'Einddatum',
+    'from' => 'Vanaf €:start_price',
+    'place_bid' => 'Plaats bod',
+    'no_bids_yet' => 'Nog geen biedingen',
+    'per_day' => 'Per dag',
+    'description' => 'Omschrijving',
+    'book' => 'Boeken',
+    'place_booking' => 'Boeking plaatsen',
 ];

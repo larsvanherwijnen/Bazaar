@@ -12,7 +12,7 @@
                 </div>
             @else
                 @foreach ($adverts as $advert)
-                    <a class="w-1/6 max-w-1/6 bg-white rounded shadow flex flex-col hover:shadow-xl">
+                    <a href="{{route('adverts.show', $advert)}}" class="w-1/6 max-w-1/6 bg-white rounded shadow flex flex-col hover:shadow-xl">
                         <img src="{{ $advert->advertImages->first() ? Storage::url('images/' . $advert->advertImages->first()->path) : Storage::url('images/img.png') }}"
                              alt="Advert Image" class="w-full h-48 object-cover rounded-t">
                         <div class="px-4 py-2 space-y-2">

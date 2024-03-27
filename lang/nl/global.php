@@ -23,4 +23,6 @@ return [
     'contract_approved' => 'Contract goedgekeurd',
     'my_adverts' => 'Mijn advertenties',
     'related_adverts' => 'Gerelateerde advertenties',
+    'edit' => 'Bewerken',
+    'delete' => 'Verwijderen',
 ];

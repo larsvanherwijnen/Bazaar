@@ -40,9 +40,12 @@ class Advert extends Model
     {
         return $this->attributes['expiry_date'];
     }
-
     public function user(): BelongsTo
     {
         return $this->BelongsTo(User::class);
+    }
+    public function bids(): HasMany
+    {
+        return $this->hasMany(Bid::class);
     }
 }

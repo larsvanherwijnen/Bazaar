@@ -21,4 +21,6 @@ return [
     'contract_approved' => 'Contract approved',
     'my_adverts' => 'My adverts',
     'related_adverts' => 'Related adverts',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
 ];

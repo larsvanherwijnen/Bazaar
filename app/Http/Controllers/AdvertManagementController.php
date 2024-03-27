@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enum\AdvertType;
-use App\Http\Requests\StoreAdvertRequest;
+use App\Http\Requests\StoreUpdateAdvertRequest;
 use App\Models\Advert;
 use App\Models\AdvertImage;
 use Illuminate\Http\RedirectResponse;
@@ -28,17 +28,17 @@ class AdvertManagementController extends Controller
         $types = AdvertType::cases();
         $maxImages = 5;
 
-        return view('advert.create', compact('types', 'maxImages'));
+        return view('advert.management.create', compact('types', 'maxImages'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAdvertRequest $request): RedirectResponse
+    public function store(StoreUpdateAdvertRequest $request): RedirectResponse
     {
         $validated = $request->validated();
         if ($validated['type'] === AdvertType::BIDDING) {
-            $validated = $request->safe()->except('price', 'start_date', 'end_date');
+            $validated = $request->safe()->except('start_date', 'end_date');
         }
 
         if ($validated['type'] === AdvertType::AUCTION) {
@@ -50,22 +50,12 @@ class AdvertManagementController extends Controller
         }
         $advert = new Advert();
         $advert->fill($validated);
-        $advert->save();
-        $this->handleImageUpload($request, $advert);
-
         auth()->user()->adverts()->save($advert);
-
-
+        $this->handleImageUpload($request, $advert);
+        
         return redirect()->route('home');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id): void
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -74,14 +64,14 @@ class AdvertManagementController extends Controller
     {
         $types = AdvertType::cases();
         $maxImages = 5;
-
-        return view('advert.edit', compact('advert', 'types', 'maxImages'));
+        $advert->load('advertImages');
+        return view('advert.management.edit', compact('advert', 'types', 'maxImages'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreAdvertRequest $request, Advert $advert): RedirectResponse
+    public function update(StoreUpdateAdvertRequest $request, Advert $advert): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -96,8 +86,8 @@ class AdvertManagementController extends Controller
         if ($validated['type'] === AdvertType::SALE || $validated['type'] === AdvertType::RENTAL) {
             $validated = $request->safe()->except('starting_price', 'start_date', 'end_date');
         }
+
         $advert->update($validated);
-        $advert->save();
 
         $this->handleImageUpload($request, $advert);
 

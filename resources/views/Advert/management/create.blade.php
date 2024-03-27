@@ -4,42 +4,21 @@
     <div class="flex justify-center mt-20">
         <div class="bg-white p-10 rounded shadow-md w-1/3">
             <h1 class="text-2xl mb-6 text-center">{{ __('advert.create_advert') }}</h1>
-            <form method="post" action="{{ route('adverts.store') }}" enctype="multipart/form-data" class="space-y-4" x-data="{ advertType: '{{ old('type', 'Sale') }}' }">
+            <form method="post" action="{{ route('my-account.adverts.store') }}" enctype="multipart/form-data" class="space-y-4" x-data="{ advertType: '{{ old('type', 'Sale') }}' }">
                 @csrf
-                <input type="hidden" id="type" name="type" x-model="advertType">
                 <div class="flex items-center space-x-4">
-                    <div class="w-1/3 bg-gray-200 rounded flex flex-col items-center py-3"
-                         :class="{ 'border-2 border-blue-500': advertType === 'Sale'}"
-                         @click="advertType = 'Sale'">
-                        <i class="fa-solid fa-tag text-2xl"></i>
-                        <div class="flex flex-col text-center">
-                            <span>{{ __('advert.sale') }}</span>
+                    @foreach(\App\Enum\AdvertType::cases() as $type)
+                        <div class="w-1/4 bg-gray-200 rounded flex flex-col items-center py-3 "
+                             :class="{ 'border-2 border-blue-500': advertType === '{{ $type }}'}">
+                            <input type="checkbox" id="{{ $type }}" name="type"
+                                   value="{{ $type }}" class="hidden"
+                                   @click="advertType = '{{ $type }}'">
+                            <label for="{{ $type }}" class="flex flex-col text-center">
+                                <i class="fa-solid {{$type->getIcon()}} text-2xl"></i>
+                                <span>{{ $type->getLabel() }}</span>
+                            </label>
                         </div>
-                    </div>
-                    <div class="w-1/3 bg-gray-200  rounded flex flex-col items-center py-3"
-                         :class="{ 'border-2 border-blue-500': advertType === 'Auction'}"
-                         @click="advertType = 'Auction'">
-                        <i class="fa-solid fa-gavel text-2xl"></i>
-                        <div class="flex flex-col text-center">
-                            <span>{{ __('advert.auction') }}</span>
-                        </div>
-                    </div>
-                    <div class="w-1/3 bg-gray-200 rounded flex flex-col items-center py-3"
-                         :class="{ 'border-2 border-blue-500': advertType === 'Bidding'}"
-                         @click="advertType = 'Bidding'">
-                        <i class="fa-solid fa-building text-2xl"></i>
-                        <div class="flex flex-col text-center">
-                            <span>{{ __('advert.bidding') }}</span>
-                        </div>
-                    </div>
-                    <div class="w-1/3 bg-gray-200 rounded flex flex-col items-center py-3"
-                         :class="{ 'border-2 border-blue-500': advertType === 'Rental'}"
-                         @click="advertType = 'Rental'">
-                        <i class="fa-solid fa-home text-2xl"></i>
-                        <div class="flex flex-col text-center">
-                            <span>{{ __('advert.rental') }}</span>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 <div class="border-b-2 border-gray-500"></div>
                 <div>
@@ -83,7 +62,7 @@
 
                 <div class="border-b-2 border-gray-500"> </div>
 
-                <div x-show="advertType === 'Sale' || advertType === 'Rental'">
+                <div x-show="advertType === 'Sale' || advertType === 'Rental' || advertType === 'Bidding'">
                     <div>
                         @error('price')
                         <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
@@ -105,21 +84,18 @@
                         <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
                         @enderror
                         <label for="start_date" class="block text-sm font-medium text-gray-700">{{__('advert.start_date')}}:</label>
-                        <input type="datetime-local" id="start_date" name="start_date" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <input type="datetime-local" id="start_date" name="start_date" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value="{{ old('start_date') }}">
                     </div>
                     <div>
                         @error('end_date')
                         <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
                         @enderror
                         <label for="end_date" class="block text-sm font-medium text-gray-700">{{__('advert.end_date')}}:</label>
-                        <input type="datetime-local" id="end_date" name="end_date" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <input type="datetime-local" id="end_date" name="end_date" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value="{{ old('end_date') }}">
                     </div>
                 </div>
-                <div x-show="advertType === 'Bidding'">
-
-                </div>
                 <div>
-                    <input type="submit" value="{{__('global.submit')}}" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" >{{__('global.submit')}}</button>
                 </div>
             </form>
         </div>
