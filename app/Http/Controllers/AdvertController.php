@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Advert;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class AdvertController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): void
     {
 
     }
@@ -18,7 +19,7 @@ class AdvertController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Advert $advert)
+    public function show(Advert $advert): View
     {
         return view('advert.show', compact('advert'));
     }

@@ -54,6 +54,7 @@ enum RolesEnum: int
             self::PRIVATE_WITHOUT_ADVERTISING => __('advert.bidding'),
             self::PRIVATE_WITH_ADVERTISING => __('advert.auction'),
             self::BUSINESS => __('advert.rental'),
+            self::ADMIN => __('advert.sale'),
         };
     }
 
@@ -62,6 +63,7 @@ enum RolesEnum: int
             self::PRIVATE_WITHOUT_ADVERTISING => 'fa-user',
             self::PRIVATE_WITH_ADVERTISING => 'fa-user',
             self::BUSINESS => 'fa-building',
+            self::ADMIN => 'fa-gavel',
         };
     }
 }

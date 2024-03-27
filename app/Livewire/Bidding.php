@@ -12,7 +12,7 @@ class bidding extends Component
 
     public Advert $advert;
     #[Validate('required|min:0.01|max:999999.99')]
-    public $amount;
+    public float $amount;
     public function save() : void
     {
         $this->validate();

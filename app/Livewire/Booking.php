@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Advert;
 use Carbon\Carbon;
+use Illuminate\View\View;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -27,7 +28,7 @@ class Booking extends Component
         $this->validate();
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.booking');
     }
