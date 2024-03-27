@@ -13,7 +13,7 @@
                              :class="{ 'border-2 border-blue-500': advertType === '{{ $type }}'}">
                             <input type="checkbox" id="{{ $type }}" name="type"
                                    value="{{ $type }}" class="hidden"
-                                   @click="advertType = '{{ $type }}'">
+                                   @click="advertType = '{{ $type }}'" :checked="advertType === '{{ $type }}'">
                             <label for="{{ $type }}" class="flex flex-col text-center">
                                 <i class="fa-solid {{$type->getIcon()}} text-2xl"></i>
                                 <span>{{ $type->getLabel() }}</span>
@@ -21,6 +21,9 @@
                         </div>
                     @endforeach
                 </div>
+                @error('type')
+                <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
+                @enderror
                 <div class="border-b-2 border-gray-500"></div>
                 <div>
                     @error('title')
