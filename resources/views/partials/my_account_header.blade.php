@@ -5,19 +5,16 @@
             <div class="text-sm font-medium text-center text-gray-500">
                 <ul class="flex flex-wrap -mb-px">
                     <li class="me-2">
-                        <a href="{{ route('profile', Auth::user()->url)}}" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg ">Profile</a>
+                        <a href="{{ route('profile', Auth::user()->url)}}" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg">{{__('global.profile')}}</a>
                     </li>
                     <li class="me-2">
-                        <a href="{{ route('my-account.settings')}}" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300  @if(request()->routeIs('my-account.settings')) text-blue-600 border-blue-600 @endif">Dashboard</a>
+                        <a href="{{ route('my-account.adverts.index')}}" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 @if(request()->routeIs('my-account.adverts.*')) text-blue-600 border-blue-600 @endif">{{__('global.my_adverts')}}</a>
                     </li>
                     <li class="me-2">
-                        <a href="#" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Settings</a>
+                        <a href="{{ route('my-account.settings')}}" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 @if(request()->routeIs('my-account.settings')) text-blue-600 border-blue-600 @endif">{{ __('global.settings') }}</a>
                     </li>
                     <li class="me-2">
-                        <a href="#" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Contacts</a>
-                    </li>
-                    <li>
-                        <a class="inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed dark:text-gray-500">Disabled</a>
+                        <a href="#" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300">Contacts</a>
                     </li>
                 </ul>
             </div>

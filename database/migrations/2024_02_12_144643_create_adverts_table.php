@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('adverts', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('user_id')->constrained();
             $table->string('title');
             $table->text('description');
             $table->string('type');

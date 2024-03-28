@@ -5,6 +5,7 @@ return [
     'search' => 'Zoeken',
     'advertise' => 'Advertentie plaatsen',
     'settings' => 'Instellingen',
+    'profile' => 'Profiel',
     'my_bazaar' => 'Mijn Bazaar',
     'save' => 'Opslaan',
     'description' => 'Omschrijving',
@@ -20,4 +21,8 @@ return [
     'approve_contract' => 'Contract goedkeuren',
     'export_contract' => 'Contract exporteren',
     'contract_approved' => 'Contract goedgekeurd',
+    'my_adverts' => 'Mijn advertenties',
+    'related_adverts' => 'Gerelateerde advertenties',
+    'edit' => 'Bewerken',
+    'delete' => 'Verwijderen',
 ];
