@@ -20,6 +20,9 @@ class AdvertController extends Controller
      */
     public function show(Advert $advert): View
     {
-        return view('advert.show', compact('advert'));
+        $reviewsCount = $advert->user->reviews->count();
+        $averageRating = $advert->user->reviews->avg('rating');
+
+        return view('advert.show', compact('advert', 'reviewsCount', 'averageRating'));
     }
 }
