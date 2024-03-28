@@ -19,6 +19,12 @@ class ProfileController extends Controller
         $reviewsCount = $user->reviews->count();
         $reviews = $user->reviews->whereNotNull('comment');
 
-        return view('profile', ['user' => $user, 'averageRating' => $averageRating, 'reviewsCount' => $reviewsCount, 'reviews' => $reviews]);
+        $showCreateButton = false;
+        if (auth()->check()) {
+            $hasReviewed = $user->reviews->contains('reviewer_id', auth()->id());
+            $showCreateButton = auth()->id() != $user->id && !$hasReviewed;
+        }
+
+        return view('profile', ['user' => $user, 'averageRating' => $averageRating, 'reviewsCount' => $reviewsCount, 'reviews' => $reviews, 'showCreateButton' => $showCreateButton]);
     }
 }

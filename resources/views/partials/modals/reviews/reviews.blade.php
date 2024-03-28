@@ -21,7 +21,18 @@
                                             @endfor
                                         </div>
                                     </div>
-                                    <p class="text-sm text-gray-500 text-right">{{ $review->created_at->format('M d, Y') }}</p>
+                                    <div>
+                                        <p class="text-sm text-gray-500 text-right">{{ $review->created_at->format('M d, Y') }}</p>
+                                        @if(auth()->check() && auth()->id() == $review->reviewer_id)
+                                            <form action="{{ route('reviews.destroy', $review) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="mt-3 w-full inline-flex justify-center sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                                    <i class="fa-solid fa-trash-can text-red-500"></i>
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
                                 </div>
                             @endforeach
                         </div>

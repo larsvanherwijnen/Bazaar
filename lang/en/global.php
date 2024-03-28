@@ -24,4 +24,8 @@ return [
     'edit' => 'Edit',
     'delete' => 'Delete',
     'reviews' => 'Reviews',
+    'create_review' => 'Write a review',
+    'view_reviews' => 'View reviews',
+    'comment_optional' => 'Comment (optional)',
+    'close' => 'Close',
 ];

@@ -26,4 +26,8 @@ return [
     'edit' => 'Bewerken',
     'delete' => 'Verwijderen',
     'reviews' => 'Beoordelingen',
+    'create_review' => 'Beoordeling schrijven',
+    'view_reviews' => 'Beoordelingen bekijken',
+    'comment_optional' => 'Opmerking (optioneel)',
+    'close' => 'Sluiten',
 ];
