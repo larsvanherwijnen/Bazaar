@@ -7,5 +7,6 @@ return [
     'logo' => 'Logo',
     'banner' => 'Banner',
     'my_details' => 'Mijn gegevens',
-
+    'api_tokens' => 'API tokens',
+    'generate_token' => 'Genereer token',
 ];
