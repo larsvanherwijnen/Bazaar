@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateTokenRequest;
 use App\Http\Requests\SettingsFormRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -69,6 +68,7 @@ class SettingsController extends Controller
     {
         $user = Auth::user();
         $token = $user->createToken($request->name);
-        return view('settings')->with(['company' => $user->company, 'token' => preg_replace('/^\d+\|/','', $token->plainTextToken)]);
+
+        return view('settings')->with(['company' => $user->company, 'token' => preg_replace('/^\d+\|/', '', $token->plainTextToken)]);
     }
 }

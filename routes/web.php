@@ -11,7 +11,6 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -35,7 +34,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/contracts/{user}/upload', [ContractController::class, 'uploadContract'])->name('contracts.upload');
         Route::post('/contracts/{contract}/approve', [ContractController::class, 'approveContract'])->name('contracts.approve');
     });
-
 
 });
 

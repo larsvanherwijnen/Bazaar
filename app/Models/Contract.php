@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * 
- *
  * @property string $id
  * @property string $user_id
  * @property string|null $approved_by
@@ -17,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $approved_at
  * @property-read \App\Models\User|null $approvedBy
  * @property-read \App\Models\User $user
+ *
  * @method static \Database\Factories\ContractFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Contract newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Contract newQuery()
@@ -26,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Contract whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Contract wherePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Contract whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class Contract extends Model

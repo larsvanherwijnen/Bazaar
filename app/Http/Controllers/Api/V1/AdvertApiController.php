@@ -16,6 +16,7 @@ class AdvertApiController extends Controller
     public function __invoke(Request $request): AnonymousResourceCollection
     {
         $adverts = Advert::where('user_id', auth()->id())->get();
+
         return AdvertResource::collection($adverts);
     }
 }

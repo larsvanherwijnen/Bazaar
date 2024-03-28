@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
- *
  * @property string $id
  * @property string $user_id
  * @property string $title
@@ -29,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $bids_count
  * @property-read string $end_date
  * @property-read \App\Models\User $user
+ *
  * @method static \Database\Factories\AdvertFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Advert newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Advert newQuery()
@@ -44,6 +43,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class Advert extends Model
