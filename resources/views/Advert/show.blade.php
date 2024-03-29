@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@php use App\Enum\AdvertType; @endphp
 
 @section('content')
     @include('partials.search')

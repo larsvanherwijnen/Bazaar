@@ -11,7 +11,7 @@ use Tests\DuskTestCase;
 
 class AdvertPageTest extends DuskTestCase
 {
-    public function testAdvertPage()
+    public function testAdvertPage(): void
     {
         $user = User::factory()->create();
         $advert = Advert::factory()->create(['user_id' => $user->id]);
@@ -24,7 +24,7 @@ class AdvertPageTest extends DuskTestCase
         });
     }
 
-    public function testAdvertPageWithSeller()
+    public function testAdvertPageWithSeller(): void
     {
         $user = User::factory()->create();
         $advert = Advert::factory()->create(['user_id' => $user->id]);
@@ -40,7 +40,7 @@ class AdvertPageTest extends DuskTestCase
         });
     }
 
-    public function testAdvertTypesCorrectFields()
+    public function testAdvertTypesCorrectFields() : void
     {
         $user = User::factory()->create();
         $advertData = [
@@ -80,7 +80,7 @@ class AdvertPageTest extends DuskTestCase
         }
     }
 
-    public function testBidPlacement()
+    public function testBidPlacement(): void
     {
         $user = User::factory()->create();
         $advert = Advert::factory()->create(['type' => AdvertType::BIDDING, 'user_id' => $user->id]);
@@ -88,7 +88,7 @@ class AdvertPageTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($user, $advert) {
             $browser->loginAs($user)
                 ->visit(route('adverts.show', $advert))
-                ->waitForText(__('advert.bidding'))
+                ->waitForText(__('advert.bidding'), 2)
                 ->assertSee(__('advert.bidding'))
                 ->assertSee(__('advert.no_bids_yet'))
                 ->type('#amount', '53')

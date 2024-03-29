@@ -31,14 +31,13 @@ class RegisterTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visitRoute('register')
                 ->assertSee(__('registration.register'))
-                ->check('#private_without_advertising')
+                ->click('label[for="private_without_advertising"]')
                 ->type('username', 'testuser')
                 ->type('email', 'test@example.com')
                 ->type('password', 'password')
                 ->type('password_confirmation', 'password')
                 ->press('Register')
-                ->assertPathIs('/register') // Update this path based on your actual redirect after registration
-                ->assertSee(__('auth.login')); // Update this text based on what is displayed after successful registration
+                ->assertSee(__('auth.login'));
         });
     }
 
@@ -47,14 +46,13 @@ class RegisterTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visitRoute('register')
                 ->assertSee(__('registration.register'))
-                ->check('#private_with_advertising')
+                ->click('label[for="private_with_advertising"]')
                 ->type('username', 'testuser')
                 ->type('email', 'test@example.com')
                 ->type('password', 'password')
                 ->type('password_confirmation', 'password')
                 ->press('Register')
-                ->assertPathIs('/register') // Update this path based on your actual redirect after registration
-                ->assertSee(__('auth.login')); //Update this text based on what is displayed after successful registration
+                ->assertSee(__('auth.login'));
         });
     }
 
@@ -62,8 +60,9 @@ class RegisterTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visitRoute('register')
+                ->waitForText(__('registration.register'))
                 ->assertSee(__('registration.register'))
-                ->check('#business')
+                ->click('label[for="business"]')
                 ->type('username', 'testuser')
                 ->type('email', 'test@example.com')
                 ->type('password', 'password')
@@ -71,7 +70,6 @@ class RegisterTest extends DuskTestCase
                 ->type('companyName', 'Test Company')
                 ->type('kvk', '123456789')
                 ->press('Register')
-                ->assertPathIs('/register') // Update this path based on your actual redirect after registration
                 ->assertSee(__('auth.login'));
         });
     }
