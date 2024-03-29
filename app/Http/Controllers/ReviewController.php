@@ -12,7 +12,6 @@ use Illuminate\View\View;
 
 class ReviewController extends Controller
 {
-
     public function store(ReviewRequest $request): RedirectResponse
     {
         $user = Auth::user();
@@ -25,11 +24,12 @@ class ReviewController extends Controller
         }
 
         if ($request->validated()) {
-           Review::create($request->validated() + ['reviewer_id' => $user->id]);
+            Review::create($request->validated() + ['reviewer_id' => $user->id]);
         }
 
         return redirect()->route('profile', ['url' => $reviewedUser->url]);
     }
+
     public function destroy(string $id): RedirectResponse
     {
         $review = Review::find($id);
