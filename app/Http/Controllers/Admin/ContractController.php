@@ -21,7 +21,7 @@ class ContractController extends Controller
     {
         $users = User::with(['contract', 'company'])->where('type', RolesEnum::BUSINESS, RolesEnum::ADMIN)->get();
 
-        return view('admin.contracts', compact('users'));
+        return view('admin.contracts')->with('users', $users);
     }
 
     public function exportContract(User $user): PdfBuilder

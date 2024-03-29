@@ -20,10 +20,6 @@ Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/u/{url}', ProfileController::class)->name('profile');
 Route::resource('adverts', AdvertController::class)->only(['index', 'show']);
 
-Route::get('/reviews/create/{user}', [ReviewController::class, 'create'])->name('reviews.create');
-Route::get('/reviews/index/{userId}', [ReviewController::class, 'index'])->name('reviews.index');
-Route::resource('reviews', ReviewController::class, ['except' => ['show', 'create', 'index']]);
-
 Route::group(['middleware' => 'auth'], function () {
     Route::prefix('my-account')->name('my-account.')->group(function () {
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
@@ -39,6 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/contracts/{contract}/approve', [ContractController::class, 'approveContract'])->name('contracts.approve');
     });
 
+    Route::resource('reviews', ReviewController::class)->only(['store', 'destroy']);
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');

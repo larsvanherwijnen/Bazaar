@@ -1,3 +1,4 @@
+@vite('resources/js/rating.js')
 <div class="flex container mx-auto pt-8">
     <div class="w-full">
         @if($user->type->isBusiness())
@@ -39,7 +40,6 @@
                 <div class="flex space-x-4">
                     @if($showCreateButton)
                         <div x-data="{openModal: false}">
-                            @vite('resources/js/rating.js')
                             <button
                                     @click="openModal = true"
                                     class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition duration-300 focus:outline-none"
@@ -49,10 +49,8 @@
                             </button>
                             @include('partials.modals.reviews.create')
                         </div>
-                    @endif
-                    @if($reviews->count() > 0)
+                    @elseif($reviews->count() > 0)
                         <div x-data="{openModal: false}">
-                            @vite('resources/js/rating.js')
                             <button
                                     @click="openModal = true"
                                     class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition duration-300 focus:outline-none"

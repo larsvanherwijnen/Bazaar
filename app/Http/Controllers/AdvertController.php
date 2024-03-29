@@ -23,6 +23,6 @@ class AdvertController extends Controller
         $reviewsCount = $advert->user->reviews->count();
         $averageRating = $advert->user->reviews->avg('rating');
 
-        return view('advert.show', compact('advert', 'reviewsCount', 'averageRating'));
+        return view('advert.show')->with(['advert' => $advert, 'reviewsCount' => $reviewsCount, 'averageRating' => $averageRating]);
     }
 }

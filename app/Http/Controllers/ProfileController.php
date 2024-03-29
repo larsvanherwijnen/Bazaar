@@ -13,17 +13,18 @@ class ProfileController extends Controller
      */
     public function __invoke(string $url): View
     {
-        $user = User::where('url', $url)->first();
-        $averageRating = Review::where('user_id', $user->id)->average('rating');
+        $user = User::with('reviews')->where('url', $url)->first();
+
+        $averageRating = $user->reviews->avg('rating');
         $reviewsCount = $user->reviews->count();
         $reviews = $user->reviews->whereNotNull('comment');
 
         $showCreateButton = false;
         if (auth()->check()) {
             $hasReviewed = $user->reviews->contains('reviewer_id', auth()->id());
-            $showCreateButton = auth()->id() != $user->id && ! $hasReviewed;
+            $showCreateButton = auth()->id() != $user->id && !$hasReviewed;
         }
 
-        return view('profile', ['user' => $user, 'averageRating' => $averageRating, 'reviewsCount' => $reviewsCount, 'reviews' => $reviews, 'showCreateButton' => $showCreateButton]);
+        return view('profile')->with(['user' => $user, 'averageRating' => $averageRating, 'reviewsCount' => $reviewsCount, 'reviews' => $reviews, 'showCreateButton' => $showCreateButton]);
     }
 }

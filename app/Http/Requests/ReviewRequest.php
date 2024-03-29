@@ -24,7 +24,6 @@ class ReviewRequest extends FormRequest
     {
         return [
             'user_id' => 'required|uuid|exists:users,id',
-            'reviewer_id' => 'required|uuid|exists:users,id',
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'nullable|string|max:200',
         ];

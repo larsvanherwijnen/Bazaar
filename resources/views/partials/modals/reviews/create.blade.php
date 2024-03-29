@@ -5,7 +5,6 @@
         <form id="form1" action="{{ route('reviews.store') }}" method="POST" class="space-y-4">
             @csrf
             <input type="hidden" name="user_id" value="{{ $user->id }}">
-            <input type="hidden" name="reviewer_id" value="{{ auth()->id() }}">
                 <p class="text-red-500 rating-error" data-error-message="{{ __('validation.rating_error') }}">
                     @error('rating')
                     {{ $message }}

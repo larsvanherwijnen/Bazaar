@@ -28,7 +28,7 @@ class AdvertManagementController extends Controller
         $types = AdvertType::cases();
         $maxImages = 5;
 
-        return view('advert.management.create', compact('types', 'maxImages'));
+        return view('advert.management.create')->with(['types' => $types, 'maxImages' => $maxImages]);
     }
 
     /**
@@ -65,7 +65,7 @@ class AdvertManagementController extends Controller
         $maxImages = 5;
         $advert->load('advertImages');
 
-        return view('advert.management.edit', compact('advert', 'types', 'maxImages'));
+        return view('advert.management.edit')->with(['advert' => $advert, 'types' => $types, 'maxImages' => $maxImages]);
     }
 
     /**
