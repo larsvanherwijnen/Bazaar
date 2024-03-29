@@ -23,7 +23,7 @@ class Rental extends Model
         'price',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'start_date',
         'end_date',
     ];
