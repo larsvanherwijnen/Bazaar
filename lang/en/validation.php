@@ -161,7 +161,6 @@ return [
     'advert_already_booked' => 'This advert is already booked for the selected dates.',
     'booking_successful' => 'Booking requested successfully.',
 
-
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

@@ -36,6 +36,7 @@ class Booking extends Component
             ->first();
         if ($existingRental) {
             session()->flash('message', trans('validation.advert_already_booked'));
+
             return;
         }
         Rental::create([
@@ -47,7 +48,6 @@ class Booking extends Component
         ]);
         session()->flash('message', trans('validation.booking_successful'));
     }
-
 
     public function render(): View
     {
