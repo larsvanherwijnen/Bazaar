@@ -9,6 +9,7 @@ use App\Models\AdvertImage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Nette\Utils\Paginator;
 
 class AdvertManagementController extends Controller
 {
@@ -36,24 +37,29 @@ class AdvertManagementController extends Controller
      */
     public function store(StoreUpdateAdvertRequest $request): RedirectResponse
     {
-        $validated = $request->validated();
-        if ($validated['type'] === AdvertType::BIDDING) {
-            $validated = $request->safe()->except('start_date', 'end_date');
-        }
+        if ($request->user()->can('create', [Advert::class, AdvertType::from($request->type), 4])) {
 
-        if ($validated['type'] === AdvertType::AUCTION) {
-            $validated = $request->safe()->except('price');
-        }
+            $validated = $request->validated();
+            if ($validated['type'] === AdvertType::BIDDING) {
+                $validated = $request->safe()->except('start_date', 'end_date');
+            }
 
-        if ($validated['type'] === AdvertType::SALE || $validated['type'] === AdvertType::RENTAL) {
-            $validated = $request->safe()->except('starting_price', 'start_date', 'end_date');
-        }
-        $advert = new Advert();
-        $advert->fill($validated);
-        auth()->user()->adverts()->save($advert);
-        $this->handleImageUpload($request, $advert);
+            if ($validated['type'] === AdvertType::AUCTION) {
+                $validated = $request->safe()->except('price');
+            }
 
-        return redirect()->route('home');
+            if ($validated['type'] === AdvertType::SALE || $validated['type'] === AdvertType::RENTAL) {
+                $validated = $request->safe()->except('starting_price', 'start_date', 'end_date');
+            }
+            $advert = new Advert();
+            $advert->fill($validated);
+            auth()->user()->adverts()->save($advert);
+            $this->handleImageUpload($request, $advert);
+
+            return redirect()->route('home');
+        } else {
+            return redirect()->route('home')->with('error', 'You have reached the maximum number of adverts allowed.');
+        }
     }
 
     /**
@@ -110,7 +116,7 @@ class AdvertManagementController extends Controller
             $images = $request->file('images');
             $images = is_array($images) ? $images : [$images];
             foreach ($images as $image) {
-                $name = time().'_'.$image->getClientOriginalName();
+                $name = time() . '_' . $image->getClientOriginalName();
                 $image->move(public_path('storage/images'), $name);
                 $advertImage = new AdvertImage();
                 $advertImage->advert_id = $advert->id;
