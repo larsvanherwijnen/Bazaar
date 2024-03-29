@@ -3,7 +3,7 @@
 @section('content')
     @include('partials.my_account_header')
 
-    <div class="flex w-1/2 mx-auto pt-8 px-4">
+    <div class="flex flex-col w-1/2 mx-auto pt-8 px-4 space-y-4">
 
         <div class="bg-white rounded w-full p-4">
             <h1 class="text-3xl font-bold mb-4">{{ __('settings.my_details') }}</h1>
@@ -11,7 +11,20 @@
                 <p>Name: {{ auth()->user()->name }}</p>
                 <p> Email: {{ auth()->user()->email }}</p>
             </div>
+        </div>
 
+        <div class="bg-white rounded w-full p-4">
+            <h1 class="text-3xl font-bold mb-4">{{ __('settings.api_tokens') }}</h1>
+            <form action="{{ route('my-account.create.token') }}" method="post">
+                @csrf
+                <input type="text" name="name" class="rounded px-3 py-2 bg-gray-200 w-full" placeholder="Token name">
+                <button type="submit" class="rounded px-3 py-2 bg-green-200 mt-4">
+                    {{__('settings.generate_token') }}
+                </button>
+            </form>
+            @if(isset($token))
+                <span>Token: {{ $token }}</span>
+            @endif
         </div>
         @if(auth()->user()->type->isBusiness())
             <div class="bg-white rounded w-full p-4">

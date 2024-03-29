@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('my-account')->name('my-account.')->group(function () {
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
         Route::post('/settings', [SettingsController::class, 'update'])->name('settings');
+        Route::post('/settings/create/token', [SettingsController::class, 'createToken'])->name('create.token');
         Route::resource('adverts', AdvertManagementController::class)->except(['show']);
     });
 

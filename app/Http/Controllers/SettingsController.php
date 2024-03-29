@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateTokenRequest;
 use App\Http\Requests\SettingsFormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
@@ -61,5 +62,13 @@ class SettingsController extends Controller
         $filePath = Storage::put($fileLocation, $file, 'public');
 
         return $config->merge([$fileName => $filePath]);
+    }
+
+    public function createToken(CreateTokenRequest $request): View
+    {
+        $user = Auth::user();
+        $token = $user->createToken($request->name);
+
+        return view('settings')->with(['company' => $user->company, 'token' => preg_replace('/^\d+\|/', '', $token->plainTextToken)]);
     }
 }
