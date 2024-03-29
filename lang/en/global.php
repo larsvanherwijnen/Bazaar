@@ -28,4 +28,9 @@ return [
     'view_reviews' => 'View reviews',
     'comment_optional' => 'Comment (optional)',
     'close' => 'Close',
+    'agenda' => 'Agenda',
+    'rented_by' => 'Rented by',
+    'pickup' => 'Pickup',
+    'return' => 'Return',
+    'no_rentals_found' => 'No rentals found',
 ];

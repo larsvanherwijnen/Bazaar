@@ -6,6 +6,9 @@ use App\Enum\AdvertType;
 use App\Http\Requests\StoreUpdateAdvertRequest;
 use App\Models\Advert;
 use App\Models\AdvertImage;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -118,5 +121,24 @@ class AdvertManagementController extends Controller
                 $advertImage->save();
             }
         }
+    }
+    public function showRentalAgenda() : View
+    {
+        $rentals = auth()->user()->rentals()->paginate(5);
+
+        $rentalsByDate = [];
+        foreach ($rentals as $rental) {
+            $startDate = Carbon::parse($rental->start_date)->format('Y-m-d');
+            $endDate = Carbon::parse($rental->end_date)->format('Y-m-d');
+
+            // Add rental for both start and end dates
+            $rentalsByDate[$startDate][] = $rental;
+            if ($startDate !== $endDate) {
+                $rentalsByDate[$endDate][] = $rental;
+            }
+        }
+        ksort($rentalsByDate); // Sort the rentals by date
+
+        return view('advert.rental_agenda')->with(['rentals' => $rentals, 'rentalsByDate' => $rentalsByDate]);
     }
 }
