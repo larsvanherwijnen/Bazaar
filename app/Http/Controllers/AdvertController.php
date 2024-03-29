@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Advert;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AdvertController extends Controller
@@ -10,9 +11,9 @@ class AdvertController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): void
+    public function index(Request $request): View
     {
-
+        return view('advert.index')->with(['search' => $request->get('search')]);
     }
 
     /**

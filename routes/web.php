@@ -15,9 +15,9 @@ use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/search', [HomeController::class, 'search'])->name('search');
 
 Route::get('/u/{url}', ProfileController::class)->name('profile');
+Route::get('/adverts2', \App\Livewire\Adverts::class)->name('adverts.index');
 Route::resource('adverts', AdvertController::class)->only(['index', 'show']);
 
 Route::group(['middleware' => 'auth'], function () {

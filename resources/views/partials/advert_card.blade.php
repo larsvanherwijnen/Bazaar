@@ -1,4 +1,4 @@
-<div class="m-4 mx-auto w-1/2 rounded-md border border-gray-100 text-gray-600 shadow-md bg-white">
+<div class="mx-auto rounded-md border border-gray-100 text-gray-600 shadow-md bg-white">
     <div class="relative flex h-full flex-col text-gray-600 md:flex-row">
         <div class="mx-auto flex items-center px-3  md:py-6">
             <img class="block h-80 max-w-full rounded-md shadow-lg"

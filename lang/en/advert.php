@@ -21,4 +21,5 @@ return [
     'description' => 'Description',
     'book' => 'Book',
     'place_booking' => 'Place Booking',
+    'all_advert_types' => 'All Adverts Types',
 ];

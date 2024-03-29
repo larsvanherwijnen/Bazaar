@@ -28,4 +28,7 @@ return [
     'view_reviews' => 'View reviews',
     'comment_optional' => 'Comment (optional)',
     'close' => 'Close',
+    'filter' => 'Filter',
+    'min_price' => 'Min price',
+    'max_price' => 'Max price',
 ];

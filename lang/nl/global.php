@@ -30,4 +30,7 @@ return [
     'view_reviews' => 'Beoordelingen bekijken',
     'comment_optional' => 'Opmerking (optioneel)',
     'close' => 'Sluiten',
+    'filter' => 'Filter',
+    'min_price' => 'Minimale prijs',
+    'max_price' => 'Maximale prijs',
 ];
