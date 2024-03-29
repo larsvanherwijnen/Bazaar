@@ -40,7 +40,7 @@ class AdvertPageTest extends DuskTestCase
         });
     }
 
-    public function testAdvertTypesCorrectFields() : void
+    public function testAdvertTypesCorrectFields(): void
     {
         $user = User::factory()->create();
         $advertData = [
