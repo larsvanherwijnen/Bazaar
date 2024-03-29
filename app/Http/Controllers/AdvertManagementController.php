@@ -6,9 +6,7 @@ use App\Enum\AdvertType;
 use App\Http\Requests\StoreUpdateAdvertRequest;
 use App\Models\Advert;
 use App\Models\AdvertImage;
-use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -122,7 +120,8 @@ class AdvertManagementController extends Controller
             }
         }
     }
-    public function showRentalAgenda() : View
+
+    public function showRentalAgenda(): View
     {
         $rentals = auth()->user()->rentals()->paginate(5);
 
