@@ -1,11 +1,11 @@
 <?php
 
 namespace Tests\Browser\Pages;
+
 use App\Enum\AdvertType;
 use App\Models\Advert;
 use App\Models\AdvertImage;
 use App\Models\User;
-use Illuminate\Support\Facades\Artisan;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
@@ -23,6 +23,7 @@ class AdvertPageTest extends DuskTestCase
                 ->assertSee($advert->description);
         });
     }
+
     public function testAdvertPageWithSeller()
     {
         $user = User::factory()->create();
@@ -38,6 +39,7 @@ class AdvertPageTest extends DuskTestCase
                 ->assertSee($advert->user->name);
         });
     }
+
     public function testAdvertTypesCorrectFields()
     {
         $user = User::factory()->create();
@@ -65,10 +67,10 @@ class AdvertPageTest extends DuskTestCase
                         break;
                     case AdvertType::RENTAL:
                         $browser->assertSee(__('advert.rental'))
-                                ->assertSee(__('advert.start_date'))
-                                ->assertSee(__('advert.end_date'))
-                                ->assertSee(__('advert.place_booking'))
-                                ->assertSee($advert->price);
+                            ->assertSee(__('advert.start_date'))
+                            ->assertSee(__('advert.end_date'))
+                            ->assertSee(__('advert.place_booking'))
+                            ->assertSee($advert->price);
                         break;
                     case AdvertType::SALE:
                         $browser->assertSee($advert->price);
@@ -77,6 +79,7 @@ class AdvertPageTest extends DuskTestCase
             });
         }
     }
+
     public function testBidPlacement()
     {
         $user = User::factory()->create();
@@ -94,6 +97,4 @@ class AdvertPageTest extends DuskTestCase
                 ->assertSee('€53.00');
         });
     }
-
 }
-

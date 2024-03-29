@@ -20,7 +20,6 @@ class MyAdvertsPageTest extends DuskTestCase
 
         Storage::fake('public');
 
-
         $this->browse(function (Browser $browser) use ($advert, $user) {
             $image = UploadedFile::fake()->image('advert_image.jpg');
             $image_path = $image->store('images', 'public');
@@ -30,9 +29,9 @@ class MyAdvertsPageTest extends DuskTestCase
                 ->visit('/my-account/adverts')
                 ->assertSee($advert->title)
                 ->assertSee($advert->description)
-                ->assertSee('€' . number_format($advert->price, 2, ','))
+                ->assertSee('€'.number_format($advert->price, 2, ','))
                 ->assertSee($advert->user->name)
-                ->assertAttribute('div.m-4 img', 'src', '/storage/images/' . $image_path); // Check if the image source is equal to the one in the advert
+                ->assertAttribute('div.m-4 img', 'src', '/storage/images/'.$image_path); // Check if the image source is equal to the one in the advert
         });
     }
 }

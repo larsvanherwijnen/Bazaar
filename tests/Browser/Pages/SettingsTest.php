@@ -22,24 +22,23 @@ class SettingsTest extends DuskTestCase
     }
 
     /** @test */
-    public function it_allows_user_to_generate_api_token() : void
+    public function it_allows_user_to_generate_api_token(): void
     {
         $user = User::factory()->create();
         if ($user->type === RolesEnum::BUSINESS) {
             Company::factory()->create(['user_id' => $user->id]);
         }
-            $this->browse(function ($browser) use ($user) {
-                $browser->loginAs($user)
-                    ->visit('/my-account/settings')
-                    ->type('name', 'Test Token') // Fill in the token name
-                    ->press(__('settings.generate_token')); // Submit the form
-            });
-
+        $this->browse(function ($browser) use ($user) {
+            $browser->loginAs($user)
+                ->visit('/my-account/settings')
+                ->type('name', 'Test Token') // Fill in the token name
+                ->press(__('settings.generate_token')); // Submit the form
+        });
 
         $this->assertDatabaseHas('personal_access_tokens', [
             'name' => 'Test Token',
         ]);
-        }
+    }
 
     /** @test */
     public function it_allows_business_user_to_update_settings(): void

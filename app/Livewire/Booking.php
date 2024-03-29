@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Models\Advert;
 use Carbon\Carbon;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
