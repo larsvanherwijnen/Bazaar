@@ -157,6 +157,7 @@ return [
     'url' => 'Het veld :attribute moet een geldige URL zijn.',
     'ulid' => 'Het veld :attribute moet een geldige ULID zijn.',
     'uuid' => 'Het veld :attribute moet een geldige UUID zijn.',
+    'rating_error' => 'Het veld beoordeling is verplicht.',
 
     /*
     |--------------------------------------------------------------------------

@@ -1,4 +1,3 @@
-@php use App\Enum\AdvertType;use Illuminate\Support\Str; @endphp
 @extends('layouts.app')
 
 @section('content')
