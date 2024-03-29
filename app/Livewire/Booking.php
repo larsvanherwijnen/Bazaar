@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Advert;
+use App\Models\Rental;
 use Carbon\Carbon;
 use Illuminate\View\View;
 use Livewire\Attributes\Validate;
@@ -27,7 +28,15 @@ class Booking extends Component
     public function save(): void
     {
         $this->validate();
+        Rental::create([
+            'advert_id' => $this->advert->id,
+            'user_id' => auth()->id(),
+            'start_date' => $this->start,
+            'end_date' => $this->end,
+            'price' => $this->advert->price,
+        ]);
     }
+
 
     public function render(): View
     {
