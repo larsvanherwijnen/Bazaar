@@ -11,10 +11,7 @@
     @endif
     <div class=" pb-5 flex justify-between">
             <h2 class="text-xl font-bold text-gray-900">{{ $advert->title }}</h2>
-            <button class="border border-blue-700 rounded py-2 px-5">
-                <i class="fa-regular fa-heart"></i>
-                Favoriet
-            </button>
+             <livewire:favorite :advert="$advert"/>
         </div>
         <div x-data="{ mainImage: '' }"
              x-init="mainImage = '{{ $advert->advertImages->first() ? Storage::url('images/' . $advert->advertImages->first()->path) : Storage::url('images/img.png') }}'"
