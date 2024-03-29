@@ -13,7 +13,7 @@ class Booking extends Component
 {
     public Advert $advert;
 
-    #[Validate('required|date|after_or_equal:today|before_or_equal:end_date')]
+    #[Validate('required|date|after_or_equal:today')]
     public string $start;
 
     #[Validate('required|date|after_or_equal:start')]
@@ -28,6 +28,16 @@ class Booking extends Component
     public function save(): void
     {
         $this->validate();
+        $existingRental = Rental::where('advert_id', $this->advert->id)
+            ->where(function ($query) {
+                $query->whereBetween('start_date', [$this->start, $this->end])
+                    ->orWhereBetween('end_date', [$this->start, $this->end]);
+            })
+            ->first();
+        if ($existingRental) {
+            session()->flash('message', trans('validation.advert_already_booked'));
+            return;
+        }
         Rental::create([
             'advert_id' => $this->advert->id,
             'user_id' => auth()->id(),
@@ -35,6 +45,7 @@ class Booking extends Component
             'end_date' => $this->end,
             'price' => $this->advert->price,
         ]);
+        session()->flash('message', trans('validation.booking_successful'));
     }
 
 
