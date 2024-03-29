@@ -12,7 +12,7 @@ class Booking extends Component
 {
     public Advert $advert;
 
-    #[Validate('required|date|after_or_equal:today|before_or_equal:end_date')]
+    #[Validate('required|date|after_or_equal:today')]
     public string $start;
 
     #[Validate('required|date|after_or_equal:start')]
