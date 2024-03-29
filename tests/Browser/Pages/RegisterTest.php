@@ -26,53 +26,53 @@ class RegisterTest extends DuskTestCase
         });
     }
 
-        public function testRegistrationForPrivateWithoutAdvertising()
-        {
-            $this->browse(function (Browser $browser) {
-                $browser->visitRoute('register')
-                    ->assertSee(__('registration.register'))
-                    ->check('#private_without_advertising')
-                    ->type('username', 'testuser')
-                    ->type('email', 'test@example.com')
-                    ->type('password', 'password')
-                    ->type('password_confirmation', 'password')
-                    ->press('Register')
-                    ->assertPathIs('/register') // Update this path based on your actual redirect after registration
-                    ->assertSee(__('auth.login')); // Update this text based on what is displayed after successful registration
-            });
-        }
+    public function testRegistrationForPrivateWithoutAdvertising()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visitRoute('register')
+                ->assertSee(__('registration.register'))
+                ->check('#private_without_advertising')
+                ->type('username', 'testuser')
+                ->type('email', 'test@example.com')
+                ->type('password', 'password')
+                ->type('password_confirmation', 'password')
+                ->press('Register')
+                ->assertPathIs('/register') // Update this path based on your actual redirect after registration
+                ->assertSee(__('auth.login')); // Update this text based on what is displayed after successful registration
+        });
+    }
 
-        public function testRegistrationForPrivateWithAdvertising()
-        {
-            $this->browse(function (Browser $browser) {
-                $browser->visitRoute('register')
-                    ->assertSee(__('registration.register'))
-                    ->check('#private_with_advertising')
-                    ->type('username', 'testuser')
-                    ->type('email', 'test@example.com')
-                    ->type('password', 'password')
-                    ->type('password_confirmation', 'password')
-                    ->press('Register')
-                    ->assertPathIs('/register') // Update this path based on your actual redirect after registration
-                    ->assertSee(__('auth.login')); //Update this text based on what is displayed after successful registration
-            });
-        }
+    public function testRegistrationForPrivateWithAdvertising()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visitRoute('register')
+                ->assertSee(__('registration.register'))
+                ->check('#private_with_advertising')
+                ->type('username', 'testuser')
+                ->type('email', 'test@example.com')
+                ->type('password', 'password')
+                ->type('password_confirmation', 'password')
+                ->press('Register')
+                ->assertPathIs('/register') // Update this path based on your actual redirect after registration
+                ->assertSee(__('auth.login')); //Update this text based on what is displayed after successful registration
+        });
+    }
 
-        public function testRegistrationForBusiness()
-        {
-            $this->browse(function (Browser $browser) {
-                $browser->visitRoute('register')
-                    ->assertSee(__('registration.register'))
-                    ->check('#business')
-                    ->type('username', 'testuser')
-                    ->type('email', 'test@example.com')
-                    ->type('password', 'password')
-                    ->type('password_confirmation', 'password')
-                    ->type('companyName', 'Test Company')
-                    ->type('kvk', '123456789')
-                    ->press('Register')
-                    ->assertPathIs('/register') // Update this path based on your actual redirect after registration
-                    ->assertSee(__('auth.login'));
-            });
-        }
+    public function testRegistrationForBusiness()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visitRoute('register')
+                ->assertSee(__('registration.register'))
+                ->check('#business')
+                ->type('username', 'testuser')
+                ->type('email', 'test@example.com')
+                ->type('password', 'password')
+                ->type('password_confirmation', 'password')
+                ->type('companyName', 'Test Company')
+                ->type('kvk', '123456789')
+                ->press('Register')
+                ->assertPathIs('/register') // Update this path based on your actual redirect after registration
+                ->assertSee(__('auth.login'));
+        });
+    }
 }
