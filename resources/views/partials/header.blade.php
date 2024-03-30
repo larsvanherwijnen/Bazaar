@@ -11,6 +11,7 @@
                     <div x-data="{open: false}" @click="open = ! open">
                         <a class="text-sm"><i class="fa fa-user mr-2"></i>{{ Auth::user()->name }}<i class="fa fa-chevron-down ml-2"></i></a>
                         <div x-show="open" x-transition class="absolute bg-white shadow-lg rounded mt-3 z-10 flex flex-col">
+                            <a href="{{ route('my-account.favorites')}}" class="text-sm hover:bg-gray-200 p-2"><i class="fa fa-cog mr-2"></i>{{ __('advert.favorites') }}</a>
                             <a href="{{ route('my-account.adverts.index')}}" class="text-sm hover:bg-gray-200 p-2"><i class="fa fa-cog mr-2"></i>{{ __('global.my_adverts') }}</a>
                             <a href="{{ route('my-account.settings')}}" class="text-sm hover:bg-gray-200 p-2"><i class="fa fa-cog mr-2"></i>{{ __('global.settings') }}</a>
                             <a href="{{ route('logout')}}" class="text-sm hover:bg-gray-200 p-2"><i class="fa fa-right-from-bracket mr-2"></i>{{ __('auth.logout') }}</a>

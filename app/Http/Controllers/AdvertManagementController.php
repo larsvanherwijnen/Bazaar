@@ -29,7 +29,7 @@ class AdvertManagementController extends Controller
         $types = AdvertType::cases();
         $maxImages = 5;
 
-        return view('advert.management.create')->with(['types' => $types, 'maxImages' => $maxImages]);
+        return view('advert.management.create')->with(['types' => $types, 'maxImages' => $maxImages, 'adverts' => auth()->user()->adverts]);
     }
 
     /**
@@ -54,6 +54,8 @@ class AdvertManagementController extends Controller
             $advert = new Advert();
             $advert->fill($validated);
             auth()->user()->adverts()->save($advert);
+            $advert->relatedAdverts()->sync($validated['relatedAdverts']);
+
             $this->handleImageUpload($request, $advert);
 
             return redirect()->route('home');
@@ -69,9 +71,10 @@ class AdvertManagementController extends Controller
     {
         $types = AdvertType::cases();
         $maxImages = 5;
-        $advert->load('advertImages');
+        $advert->load(['advertImages', 'relatedAdverts']);
+        $relatedAdvertsIds = $advert->relatedAdverts()->pluck('related_advert_id')->toArray();
 
-        return view('advert.management.edit')->with(['advert' => $advert, 'types' => $types, 'maxImages' => $maxImages]);
+        return view('advert.management.edit')->with(['advert' => $advert, 'types' => $types, 'maxImages' => $maxImages, 'adverts' => auth()->user()->adverts, 'relatedAdvertsIds' => $relatedAdvertsIds]);
     }
 
     /**
@@ -94,7 +97,7 @@ class AdvertManagementController extends Controller
         }
 
         $advert->update($validated);
-
+        $advert->relatedAdverts()->sync($validated['relatedAdverts'] ?? []);
         $this->handleImageUpload($request, $advert);
 
         return redirect()->route('home');

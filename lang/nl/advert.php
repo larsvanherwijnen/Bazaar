@@ -22,4 +22,5 @@ return [
     'book' => 'Boeken',
     'place_booking' => 'Boeking plaatsen',
     'all_advert_types' => 'Alle advertentietypes',
+    'favorites' => 'Favorieten',
 ];

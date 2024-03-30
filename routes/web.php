@@ -8,6 +8,7 @@ use App\Http\Controllers\AdvertManagementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
@@ -26,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/settings', [SettingsController::class, 'update'])->name('settings');
         Route::post('/settings/create/token', [SettingsController::class, 'createToken'])->name('create.token');
         Route::resource('adverts', AdvertManagementController::class)->except(['show']);
+        Route::get('favorites', FavoritesController::class)->name('favorites');
     });
 
     Route::group(['middleware' => 'role:'.RolesEnum::ADMIN->value, 'prefix' => 'admin', 'as' => 'admin.'], function () {

@@ -32,6 +32,7 @@ class StoreUpdateAdvertRequest extends FormRequest
             'starting_price' => 'required_if:type,Auction,Bidding',
             'start_date' => 'nullable|required_if:type,Auction|date',
             'end_date' => 'nullable|required_if:type,Auction|date|after:start_date',
+            'relatedAdverts' => 'nullable|array|max:4',
         ];
     }
 }

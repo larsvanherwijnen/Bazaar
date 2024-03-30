@@ -40,6 +40,17 @@
                     <textarea id="description" name="description" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{{ old('description', $advert->description ) }}</textarea>
                 </div>
                 <div>
+                    @error('relatedAdverts')
+                    <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
+                    @enderror
+                    <label for="description" class="block text-sm font-medium text-gray-700">{{ __('global.related_adverts') }}:</label>
+                    <select class="js-example-basic-multiple mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" name="relatedAdverts[]" multiple="multiple">
+                        @foreach($adverts as $advert)
+                            <option value="{{ $advert->id }}" {{ in_array($advert->id, $relatedAdvertsIds) ? 'selected' : '' }}>{{ $advert->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
                     @error('images')
                     <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
                     @enderror
@@ -105,4 +116,12 @@
         </div>
     </div>
 @endsection
-
+@push('custom-scripts')
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2({
+                maximumSelectionLength: 4
+            });
+        });
+    </script>
+@endpush
