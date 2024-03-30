@@ -33,4 +33,6 @@ return [
     'pickup' => 'Pickup',
     'return' => 'Return',
     'no_rentals_found' => 'No rentals found',
+    'rented' => 'Rented',
+    'rented_out' => 'Rented out',
 ];

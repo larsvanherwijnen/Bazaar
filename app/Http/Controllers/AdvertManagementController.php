@@ -6,6 +6,7 @@ use App\Enum\AdvertType;
 use App\Http\Requests\StoreUpdateAdvertRequest;
 use App\Models\Advert;
 use App\Models\AdvertImage;
+use App\Models\Rental;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -123,21 +124,54 @@ class AdvertManagementController extends Controller
 
     public function showRentalAgenda(): View
     {
-        $rentals = auth()->user()->rentals()->paginate(5);
 
-        $rentalsByDate = [];
-        foreach ($rentals as $rental) {
+        $userAdverts = auth()->user()->adverts->pluck('id')->toArray();
+
+        $rentals = Rental::where('user_id', auth()->id())
+            ->orWhereIn('advert_id', $userAdverts)
+            ->paginate(10);
+
+        $rented = $rentals->where('user_id', auth()->id());
+        $rentedOut = $rentals->where('user_id', '!=', auth()->id());
+
+
+        $rented = $rented->flatMap(function ($rental) {
             $startDate = Carbon::parse($rental->start_date)->format('Y-m-d');
             $endDate = Carbon::parse($rental->end_date)->format('Y-m-d');
 
-            // Add rental for both start and end dates
-            $rentalsByDate[$startDate][] = $rental;
+            // Create an array entry for both start and end dates
+            $dates = [$startDate];
             if ($startDate !== $endDate) {
-                $rentalsByDate[$endDate][] = $rental;
+                $dates[] = $endDate;
             }
-        }
-        ksort($rentalsByDate); // Sort the rentals by date
 
-        return view('advert.rental_agenda')->with(['rentals' => $rentals, 'rentalsByDate' => $rentalsByDate]);
+            return collect($dates)->mapToGroups(function ($date) use ($rental) {
+                return [$date => $rental];
+            });
+        });
+
+        $rentedOut = $rentedOut->flatMap(function ($rental) {
+            $startDate = Carbon::parse($rental->start_date)->format('Y-m-d');
+            $endDate = Carbon::parse($rental->end_date)->format('Y-m-d');
+
+            // Create an array entry for both start and end dates
+            $dates = [$startDate];
+            if ($startDate !== $endDate) {
+                $dates[] = $endDate;
+            }
+
+            return collect($dates)->mapToGroups(function ($date) use ($rental) {
+                return [$date => $rental];
+            });
+        });
+
+        $rented = $rented->sortKeys();
+        $rentedOut = $rentedOut->sortKeys();
+
+        return view('advert.rental_agenda')->with([
+            'rentals' => $rentals,
+            'rented' => $rented,
+            'rentedOut' => $rentedOut,
+        ]);
     }
 }

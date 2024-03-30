@@ -35,4 +35,6 @@ return [
     'pickup' => 'Ophalen',
     'return' => 'Terugbrengen',
     'no_rentals_found' => 'Geen verhuur gevonden',
+    'rented' => 'Gehuurd',
+    'rented_out' => 'Verhuurd',
 ];
