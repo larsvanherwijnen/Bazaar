@@ -145,10 +145,6 @@ class AdvertManagementController extends Controller
         ]);
     }
 
-    /**
-     * @param Collection $rentals
-     * @return Collection
-     */
     public function getRentals(Collection $rentals): Collection
     {
         return $rentals->flatMap(function ($rental) {
@@ -166,6 +162,4 @@ class AdvertManagementController extends Controller
             });
         })->sortKeys();
     }
-
-
 }
