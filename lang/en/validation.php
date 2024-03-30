@@ -158,6 +158,8 @@ return [
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
     'rating_error' => 'The rating is required.',
+    'advert_already_booked' => 'This advert is already booked for the selected dates.',
+    'booking_successful' => 'Booking requested successfully.',
 
     /*
     |--------------------------------------------------------------------------

@@ -6,8 +6,11 @@ use App\Enum\AdvertType;
 use App\Http\Requests\StoreUpdateAdvertRequest;
 use App\Models\Advert;
 use App\Models\AdvertImage;
+use App\Models\Rental;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 class AdvertManagementController extends Controller
@@ -118,5 +121,45 @@ class AdvertManagementController extends Controller
                 $advertImage->save();
             }
         }
+    }
+
+    public function showRentalAgenda(): View
+    {
+
+        $userAdverts = auth()->user()->adverts->pluck('id')->toArray();
+
+        $rentals = Rental::where('user_id', auth()->id())
+            ->orWhereIn('advert_id', $userAdverts)
+            ->paginate(10);
+
+        $rented = $rentals->where('user_id', auth()->id());
+        $rentedOut = $rentals->where('user_id', '!=', auth()->id());
+
+        $rented = $this->getRentals($rented);
+        $rentedOut = $this->getRentals($rentedOut);
+
+        return view('advert.rental_agenda')->with([
+            'rentals' => $rentals,
+            'rented' => $rented,
+            'rentedOut' => $rentedOut,
+        ]);
+    }
+
+    public function getRentals(Collection $rentals): Collection
+    {
+        return $rentals->flatMap(function ($rental) {
+            $startDate = Carbon::parse($rental->start_date)->format('Y-m-d');
+            $endDate = Carbon::parse($rental->end_date)->format('Y-m-d');
+
+            // Create an array entry for both start and end dates
+            $dates = [$startDate];
+            if ($startDate !== $endDate) {
+                $dates[] = $endDate;
+            }
+
+            return collect($dates)->mapToGroups(function ($date) use ($rental) {
+                return [$date => $rental];
+            });
+        })->sortKeys();
     }
 }

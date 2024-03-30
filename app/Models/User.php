@@ -108,4 +108,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
+
+    public function rentals(): HasMany
+    {
+        return $this->hasMany(Rental::class);
+    }
 }

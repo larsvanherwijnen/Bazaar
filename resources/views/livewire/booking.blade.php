@@ -3,7 +3,11 @@
         <div class="flex flex-col">
             <span class="text-xl font-bold text-gray-900">{{ __('advert.book') }}</span>
         </div>
-
+        @if (session()->has('message'))
+            <div class="alert alert-danger">
+                {{ session('message') }}
+            </div>
+        @endif
         <div class="flex flex-col space-y-4">
             <div>
                 <label for="start" class="text-sm text-gray-500">{{ __('advert.start_date') }}</label>

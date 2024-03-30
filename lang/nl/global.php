@@ -30,4 +30,11 @@ return [
     'view_reviews' => 'Beoordelingen bekijken',
     'comment_optional' => 'Opmerking (optioneel)',
     'close' => 'Sluiten',
+    'agenda' => 'Agenda',
+    'rented_by' => 'Verhuurd door',
+    'pickup' => 'Ophalen',
+    'return' => 'Terugbrengen',
+    'no_rentals_found' => 'Geen verhuur gevonden',
+    'rented' => 'Gehuurd',
+    'rented_out' => 'Verhuurd',
 ];
