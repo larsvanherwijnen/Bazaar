@@ -31,4 +31,11 @@ return [
     'filter' => 'Filter',
     'min_price' => 'Min price',
     'max_price' => 'Max price',
+    'agenda' => 'Agenda',
+    'rented_by' => 'Rented by',
+    'pickup' => 'Pickup',
+    'return' => 'Return',
+    'no_rentals_found' => 'No rentals found',
+    'rented' => 'Rented',
+    'rented_out' => 'Rented out',
 ];

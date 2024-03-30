@@ -33,4 +33,11 @@ return [
     'filter' => 'Filter',
     'min_price' => 'Minimale prijs',
     'max_price' => 'Maximale prijs',
+    'agenda' => 'Agenda',
+    'rented_by' => 'Verhuurd door',
+    'pickup' => 'Ophalen',
+    'return' => 'Terugbrengen',
+    'no_rentals_found' => 'Geen verhuur gevonden',
+    'rented' => 'Gehuurd',
+    'rented_out' => 'Verhuurd',
 ];

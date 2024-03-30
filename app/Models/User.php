@@ -113,4 +113,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Favorite::class);
     }
+
+    public function rentals(): HasMany
+    {
+        return $this->hasMany(Rental::class);
+    }
 }

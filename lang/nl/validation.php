@@ -158,6 +158,8 @@ return [
     'ulid' => 'Het veld :attribute moet een geldige ULID zijn.',
     'uuid' => 'Het veld :attribute moet een geldige UUID zijn.',
     'rating_error' => 'Het veld beoordeling is verplicht.',
+    'advert_already_booked' => 'Het advertentie is al geboekt op de geselecteerde data.',
+    'booking_successful' => 'De boeking verzoek is succesvol.',
 
     /*
     |--------------------------------------------------------------------------
