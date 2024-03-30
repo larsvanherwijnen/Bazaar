@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@php use App\Enum\AdvertType; @endphp
 
 @section('content')
     @include('partials.search')
@@ -13,9 +14,9 @@
                         @include('partials.advert.seller', $advert)
                     </div>
                     <div class="bg-white p-5 rounded flex-col">
-                        @if($advert->type == \App\Enum\AdvertType::AUCTION || $advert->type == \App\Enum\AdvertType::BIDDING)
+                        @if($advert->type == AdvertType::AUCTION || $advert->type == AdvertType::BIDDING)
                             <livewire:bidding :advert="$advert"/>
-                        @elseif($advert->type == \App\Enum\AdvertType::RENTAL)
+                        @elseif($advert->type == AdvertType::RENTAL)
                             <livewire:booking :advert="$advert"/>
                         @endif
                     </div>
