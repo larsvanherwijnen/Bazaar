@@ -10,6 +10,7 @@ use App\Models\Rental;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 class AdvertManagementController extends Controller
@@ -134,39 +135,8 @@ class AdvertManagementController extends Controller
         $rented = $rentals->where('user_id', auth()->id());
         $rentedOut = $rentals->where('user_id', '!=', auth()->id());
 
-
-        $rented = $rented->flatMap(function ($rental) {
-            $startDate = Carbon::parse($rental->start_date)->format('Y-m-d');
-            $endDate = Carbon::parse($rental->end_date)->format('Y-m-d');
-
-            // Create an array entry for both start and end dates
-            $dates = [$startDate];
-            if ($startDate !== $endDate) {
-                $dates[] = $endDate;
-            }
-
-            return collect($dates)->mapToGroups(function ($date) use ($rental) {
-                return [$date => $rental];
-            });
-        });
-
-        $rentedOut = $rentedOut->flatMap(function ($rental) {
-            $startDate = Carbon::parse($rental->start_date)->format('Y-m-d');
-            $endDate = Carbon::parse($rental->end_date)->format('Y-m-d');
-
-            // Create an array entry for both start and end dates
-            $dates = [$startDate];
-            if ($startDate !== $endDate) {
-                $dates[] = $endDate;
-            }
-
-            return collect($dates)->mapToGroups(function ($date) use ($rental) {
-                return [$date => $rental];
-            });
-        });
-
-        $rented = $rented->sortKeys();
-        $rentedOut = $rentedOut->sortKeys();
+        $rented = $this->getRentals($rented);
+        $rentedOut = $this->getRentals($rentedOut);
 
         return view('advert.rental_agenda')->with([
             'rentals' => $rentals,
@@ -174,4 +144,28 @@ class AdvertManagementController extends Controller
             'rentedOut' => $rentedOut,
         ]);
     }
+
+    /**
+     * @param Collection $rentals
+     * @return Collection
+     */
+    public function getRentals(Collection $rentals): Collection
+    {
+        return $rentals->flatMap(function ($rental) {
+            $startDate = Carbon::parse($rental->start_date)->format('Y-m-d');
+            $endDate = Carbon::parse($rental->end_date)->format('Y-m-d');
+
+            // Create an array entry for both start and end dates
+            $dates = [$startDate];
+            if ($startDate !== $endDate) {
+                $dates[] = $endDate;
+            }
+
+            return collect($dates)->mapToGroups(function ($date) use ($rental) {
+                return [$date => $rental];
+            });
+        })->sortKeys();
+    }
+
+
 }
