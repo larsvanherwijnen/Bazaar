@@ -9,7 +9,6 @@ use App\Models\AdvertImage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Nette\Utils\Paginator;
 
 class AdvertManagementController extends Controller
 {
@@ -119,7 +118,7 @@ class AdvertManagementController extends Controller
             $images = $request->file('images');
             $images = is_array($images) ? $images : [$images];
             foreach ($images as $image) {
-                $name = time() . '_' . $image->getClientOriginalName();
+                $name = time().'_'.$image->getClientOriginalName();
                 $image->move(public_path('storage/images'), $name);
                 $advertImage = new AdvertImage();
                 $advertImage->advert_id = $advert->id;

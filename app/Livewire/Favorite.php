@@ -8,7 +8,6 @@ use Livewire\Component;
 
 class Favorite extends Component
 {
-
     public Advert $advert;
 
     public function favorite(): void

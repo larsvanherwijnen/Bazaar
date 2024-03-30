@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Advert;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -14,5 +13,4 @@ class HomeController extends Controller
 
         return view('home', ['adverts' => $adverts]);
     }
-
 }

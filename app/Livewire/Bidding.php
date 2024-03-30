@@ -11,9 +11,6 @@ class Bidding extends Component
 {
     public Advert $advert;
 
-
-
-
     #[Validate('required|min:0.01|max:999999.99')]
     public float $amount;
 
