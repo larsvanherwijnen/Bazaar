@@ -25,13 +25,6 @@ class Adverts extends Component
     public ?float $minPrice = null;
     public ?float $maxPrice = null;
 
-    public function mount()
-    {
-        $this->advertType = null;
-        $this->minPrice = 0;
-        $this->maxPrice = 999;
-    }
-
     public function render(): View
     {
         $adverts = Advert::query()
