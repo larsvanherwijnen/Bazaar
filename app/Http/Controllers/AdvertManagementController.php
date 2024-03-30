@@ -56,7 +56,7 @@ class AdvertManagementController extends Controller
             $advert = new Advert();
             $advert->fill($validated);
             auth()->user()->adverts()->save($advert);
-            $advert->relatedAdverts()->sync($validated['relatedAdverts']);
+            $advert->relatedAdverts()->sync($validated['relatedAdverts'] ?? []);
 
             $this->handleImageUpload($request, $advert);
 
