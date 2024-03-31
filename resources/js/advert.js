@@ -47,5 +47,5 @@ document.getElementById('images').addEventListener('change', function() {
 
     // update total images
     document.getElementById('totalImages').value = totalImages;
-    document.querySelector('.text-green-600').textContent = `${totalImages} of 6 photos used!`;
+    document.querySelector('.text-green-600').textContent = `${totalImages} of 5 photos used!`;
 });

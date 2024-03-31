@@ -21,11 +21,11 @@
 
                         @elseif($advert->type == App\Enum\AdvertType::SALE)
                             @if(!$advert->bought_by)
-                                <form action="{{ route('adverts.buy', ['advert' => $advert->id]) }}" method="POST">
+                                <form action="{{ route('adverts.sellBuy', ['advert' => $advert->id]) }}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                                        {{ __('advert.sellBuy') }}
+                                        {{ __('advert.buy') }}
                                     </button>
                                 </form>
                             @else

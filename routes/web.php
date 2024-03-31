@@ -21,7 +21,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/u/{url}', ProfileController::class)->name('profile');
 Route::get('/adverts2', \App\Livewire\Adverts::class)->name('adverts.index');
 Route::resource('adverts', AdvertController::class)->only(['index', 'show']);
-Route::put('/adverts/{advert}/sell/?{bid}', [AdvertController::class, 'sellBuy'])->name('adverts.sellBuy');
+Route::put('/adverts/{advert}/sell/{bid?}', [AdvertController::class, 'sellBuy'])->name('adverts.sellBuy');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::prefix('my-account')->name('my-account.')->group(function () {

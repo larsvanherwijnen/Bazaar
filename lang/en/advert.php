@@ -29,4 +29,5 @@ return [
     'date_bought' => 'Date Bought',
     'sell' => 'Sell',
     'sold' => 'Sold',
+    'buy' => 'Buy',
 ];
