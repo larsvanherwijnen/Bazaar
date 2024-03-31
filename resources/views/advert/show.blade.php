@@ -1,6 +1,5 @@
 @extends('layouts.app')
-@php use App\Enum\AdvertType; @endphp
-
+@vite('resources/js/rating.js')
 @section('content')
     @include('partials.search')
     <section class="py-12 sm:py-16">
@@ -14,10 +13,11 @@
                         @include('partials.advert.seller', $advert)
                     </div>
                     <div class="bg-white p-5 rounded flex-col">
-                        @if($advert->type == AdvertType::AUCTION || $advert->type == AdvertType::BIDDING)
+                        @if($advert->type == App\Enum\AdvertType::AUCTION || $advert->type == App\Enum\AdvertType::BIDDING)
                             <livewire:bidding :advert="$advert"/>
-                        @elseif($advert->type == AdvertType::RENTAL)
+                        @elseif($advert->type == App\Enum\AdvertType::RENTAL)
                             <livewire:booking :advert="$advert"/>
+                        @include('partials.advert_review', ['averageRatingRental' => $averageRatingRental, 'reviewsCountRental' => $reviewsCountRental, 'showReviewCreateButton' => $showReviewCreateButton, 'showReviewButton' => $showReviewButton, ])
                         @endif
                     </div>
                 </div>
@@ -27,8 +27,6 @@
                     @include('partials.advert.info', $advert)
                 </div>
             @endif
-
         </div>
     </section>
-
 @endsection

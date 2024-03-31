@@ -93,4 +93,9 @@ class Advert extends Model
     {
         return $this->belongsToMany(Advert::class, 'advert_advert', 'advert_id', 'related_advert_id');
     }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
 }
