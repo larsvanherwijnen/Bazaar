@@ -2,11 +2,11 @@
 
 namespace Tests\Browser\Pages;
 
+use App\Models\Advert;
 use App\Models\Favorite;
+use App\Models\User;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
-use App\Models\User;
-use App\Models\Advert;
 
 class FavoritesTest extends DuskTestCase
 {
@@ -43,7 +43,6 @@ class FavoritesTest extends DuskTestCase
         $advert = Advert::factory()->create(['user_id' => $user->id]);
         Favorite::create(['user_id' => $user->id, 'advert_id' => $advert->id]);
 
-
         $this->browse(function (Browser $browser) use ($user, $advert) {
             $browser->loginAs($user)
                 ->visitRoute('adverts.show', ['advert' => $advert->id])
@@ -61,19 +60,19 @@ class FavoritesTest extends DuskTestCase
     /**
      * Test that a user can see their favorites.
      */
-   public function testUserCanSeeFavorites(): void
+    public function testUserCanSeeFavorites(): void
     {
-    $user = User::factory()->create();
-    $advert1 = Advert::factory()->create(['user_id' => $user->id]);
-    $advert2 = Advert::factory()->create(['user_id' => $user->id]);
+        $user = User::factory()->create();
+        $advert1 = Advert::factory()->create(['user_id' => $user->id]);
+        $advert2 = Advert::factory()->create(['user_id' => $user->id]);
 
-    Favorite::create(['user_id' => $user->id, 'advert_id' => $advert1->id]);
+        Favorite::create(['user_id' => $user->id, 'advert_id' => $advert1->id]);
 
-    $this->browse(function (Browser $browser) use ($user, $advert1, $advert2) {
-        $browser->loginAs($user)
-            ->visitRoute('my-account.favorites')
-            ->assertSee($advert1->title)
-            ->assertDontSee($advert2->title);
-    });
-}
+        $this->browse(function (Browser $browser) use ($user, $advert1, $advert2) {
+            $browser->loginAs($user)
+                ->visitRoute('my-account.favorites')
+                ->assertSee($advert1->title)
+                ->assertDontSee($advert2->title);
+        });
+    }
 }

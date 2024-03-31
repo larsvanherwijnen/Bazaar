@@ -5,9 +5,7 @@ namespace Tests\Browser\Pages;
 use App\Enum\AdvertType;
 use App\Models\Advert;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
