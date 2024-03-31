@@ -22,9 +22,12 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white p-5 rounded flex-col">
-                @include('partials.advert.info', $advert)
-            </div>
+            @if(count($advert->relatedAdverts) != 0)
+                <div class="bg-white p-5 rounded flex-col">
+                    @include('partials.advert.info', $advert)
+                </div>
+            @endif
+
         </div>
     </section>
 

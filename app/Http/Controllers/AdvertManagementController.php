@@ -31,7 +31,7 @@ class AdvertManagementController extends Controller
         $types = AdvertType::cases();
         $maxImages = 5;
 
-        return view('advert.management.create')->with(['types' => $types, 'maxImages' => $maxImages]);
+        return view('advert.management.create')->with(['types' => $types, 'maxImages' => $maxImages, 'adverts' => auth()->user()->adverts]);
     }
 
     /**
@@ -39,24 +39,31 @@ class AdvertManagementController extends Controller
      */
     public function store(StoreUpdateAdvertRequest $request): RedirectResponse
     {
-        $validated = $request->validated();
-        if ($validated['type'] === AdvertType::BIDDING) {
-            $validated = $request->safe()->except('start_date', 'end_date');
-        }
+        if ($request->user()->can('create', [Advert::class, AdvertType::from($request->type), 4])) {
 
-        if ($validated['type'] === AdvertType::AUCTION) {
-            $validated = $request->safe()->except('price');
-        }
+            $validated = $request->validated();
+            if ($validated['type'] === AdvertType::BIDDING) {
+                $validated = $request->safe()->except('start_date', 'end_date');
+            }
 
-        if ($validated['type'] === AdvertType::SALE || $validated['type'] === AdvertType::RENTAL) {
-            $validated = $request->safe()->except('starting_price', 'start_date', 'end_date');
-        }
-        $advert = new Advert();
-        $advert->fill($validated);
-        auth()->user()->adverts()->save($advert);
-        $this->handleImageUpload($request, $advert);
+            if ($validated['type'] === AdvertType::AUCTION) {
+                $validated = $request->safe()->except('price');
+            }
 
-        return redirect()->route('home');
+            if ($validated['type'] === AdvertType::SALE || $validated['type'] === AdvertType::RENTAL) {
+                $validated = $request->safe()->except('starting_price', 'start_date', 'end_date');
+            }
+            $advert = new Advert();
+            $advert->fill($validated);
+            auth()->user()->adverts()->save($advert);
+            $advert->relatedAdverts()->sync($validated['relatedAdverts'] ?? []);
+
+            $this->handleImageUpload($request, $advert);
+
+            return redirect()->route('home');
+        } else {
+            return redirect()->route('home')->with('error', 'You have reached the maximum number of adverts allowed.');
+        }
     }
 
     /**
@@ -66,9 +73,10 @@ class AdvertManagementController extends Controller
     {
         $types = AdvertType::cases();
         $maxImages = 5;
-        $advert->load('advertImages');
+        $advert->load(['advertImages', 'relatedAdverts']);
+        $relatedAdvertsIds = $advert->relatedAdverts()->pluck('related_advert_id')->toArray();
 
-        return view('advert.management.edit')->with(['advert' => $advert, 'types' => $types, 'maxImages' => $maxImages]);
+        return view('advert.management.edit')->with(['advert' => $advert, 'types' => $types, 'maxImages' => $maxImages, 'adverts' => auth()->user()->adverts, 'relatedAdvertsIds' => $relatedAdvertsIds]);
     }
 
     /**
@@ -91,7 +99,7 @@ class AdvertManagementController extends Controller
         }
 
         $advert->update($validated);
-
+        $advert->relatedAdverts()->sync($validated['relatedAdverts'] ?? []);
         $this->handleImageUpload($request, $advert);
 
         return redirect()->route('home');

@@ -12,6 +12,8 @@ export default {
     pattern: /border-(red|green|blue)/,
   },
 
-  plugins: [],
+  plugins: [
+
+  ],
 }
 

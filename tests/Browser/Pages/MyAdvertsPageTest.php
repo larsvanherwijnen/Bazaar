@@ -31,7 +31,7 @@ class MyAdvertsPageTest extends DuskTestCase
                 ->assertSee($advert->description)
                 ->assertSee('€'.number_format($advert->price, 2, ','))
                 ->assertSee($advert->user->name)
-                ->assertAttribute('div.m-4 img', 'src', '/storage/images/'.$image_path); // Check if the image source is equal to the one in the advert
+                ->assertAttribute('img', 'src', '/storage/images/'.$image_path); // Check if the image source is equal to the one in the advert
         });
     }
 }

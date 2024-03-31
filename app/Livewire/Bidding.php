@@ -7,7 +7,7 @@ use Illuminate\View\View;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-class bidding extends Component
+class Bidding extends Component
 {
     public Advert $advert;
 

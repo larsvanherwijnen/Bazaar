@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Advert;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin \App\Models\Advert **/
+/** @mixin Advert **/
 class AdvertResource extends JsonResource
 {
     /**

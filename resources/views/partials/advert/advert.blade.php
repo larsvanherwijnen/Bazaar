@@ -13,19 +13,17 @@
         </div>
     @endif
     <div class=" pb-5 flex justify-between">
-        <h2 class="text-xl font-bold text-gray-900">{{ $advert->title }}</h2>
-        <button class="border border-blue-700 rounded py-2 px-5">
-            <i class="fa-regular fa-heart"></i>
-            Favoriet
-        </button>
-    </div>
-    <div x-data="{ mainImage: '' }"
-         x-init="mainImage = '{{ $advert->advertImages->first() ? Storage::url('images/' . $advert->advertImages->first()->path) : Storage::url('images/img.png') }}'"
-         class="flex space-x-5">
-        <div class="flex flex-col-reverse">
-            <div class="order-2">
-                <div class="max-w-96 overflow-hidden rounded-lg">
-                    <img x-bind:src="mainImage" class="h-full w-full max-w-full object-cover" alt=""/>
+            <h2 class="text-xl font-bold text-gray-900">{{ $advert->title }}</h2>
+             <livewire:favorite :advert="$advert"/>
+        </div>
+        <div x-data="{ mainImage: '' }"
+             x-init="mainImage = '{{ $advert->advertImages->first() ? Storage::url('images/' . $advert->advertImages->first()->path) : Storage::url('images/img.png') }}'"
+             class="flex space-x-5">
+            <div class="flex flex-col-reverse">
+                <div class="order-2">
+                    <div class="max-w-96 overflow-hidden rounded-lg">
+                        <img x-bind:src="mainImage" class="h-full w-full max-w-full object-cover" alt=""/>
+                    </div>
                 </div>
             </div>
             <div class="w-full">
