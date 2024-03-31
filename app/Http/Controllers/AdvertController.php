@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Advert;
+use App\Models\Bid;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -36,5 +38,18 @@ class AdvertController extends Controller
         ];
 
         return view('advert.show')->with($data);
+    }
+
+    public function sellBuy(Advert $advert, Bid $bid = null): RedirectResponse
+    {
+        if ($bid) {
+            $advert->bought_by = $bid->user_id;
+        } else {
+            $advert->bought_by = auth()->id();
+        }
+        $advert->bought_at = now();
+        $advert->save();
+
+        return redirect()->back();
     }
 }

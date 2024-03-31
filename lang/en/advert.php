@@ -27,4 +27,6 @@ return [
     'remove_favorite' => 'Remove Favorite',
     'purchased_adverts' => 'Purchased Adverts',
     'date_bought' => 'Date Bought',
+    'sell' => 'Sell',
+    'sold' => 'Sold',
 ];

@@ -18,7 +18,20 @@
                         @elseif($advert->type == App\Enum\AdvertType::RENTAL)
                             <livewire:booking :advert="$advert"/>
                         @include('partials.advert_review', ['averageRatingRental' => $averageRatingRental, 'reviewsCountRental' => $reviewsCountRental, 'showReviewCreateButton' => $showReviewCreateButton, 'showReviewButton' => $showReviewButton, ])
-                        @endif
+
+                        @elseif($advert->type == App\Enum\AdvertType::SALE)
+                            @if(!$advert->bought_by)
+                                <form action="{{ route('adverts.buy', ['advert' => $advert->id]) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                                        {{ __('advert.sellBuy') }}
+                                    </button>
+                                </form>
+                            @else
+                                <p class="text-red-500 font-bold">{{__('advert.sold')}}</p>
+                            @endif
+                       @endif
                     </div>
                 </div>
             </div>

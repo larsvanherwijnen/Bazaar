@@ -25,7 +25,6 @@
             @endif
         </div>
     @endif
-
     @if($advert->type == \App\Enum\AdvertType::AUCTION || $advert->type == \App\Enum\AdvertType::BIDDING)
     @endif
 </div>
