@@ -6,7 +6,7 @@
             </select>
             <div class="relative w-full">
                 <i class="absolute fa fa-search text-gray-400 right-4 top-3"></i>
-                <input type="text" placeholder="{{ __('global.search')}}...." id="url" name="search" value="{{ request()->query('search') }}"
+                <input dusk="search" type="text" placeholder="{{ __('global.search')}}...." id="url" name="search" value="{{ request()->query('search') }}"
                        class="bg-gray-50 text-gray-900 text-sm rounded-r-lg block w-full p-2.5">
             </div>
         </div>

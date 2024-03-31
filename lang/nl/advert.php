@@ -23,4 +23,6 @@ return [
     'place_booking' => 'Boeking plaatsen',
     'all_advert_types' => 'Alle advertentietypes',
     'favorites' => 'Favorieten',
+    'favorite' => 'Favoriet',
+    'remove_favorite' => 'Verwijder favoriet',
 ];

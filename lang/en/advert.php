@@ -23,4 +23,6 @@ return [
     'place_booking' => 'Place Booking',
     'all_advert_types' => 'All Adverts Types',
     'favorites' => 'Favorites',
+    'favorite' => 'Favorite',
+    'remove_favorite' => 'Remove Favorite',
 ];
