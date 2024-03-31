@@ -14,46 +14,29 @@ use Illuminate\View\View;
 class ReviewController extends Controller
 {
     public function store(ReviewRequest $request): RedirectResponse
-    {
-        $user = Auth::user();
-        $reviewedUser = null;
-        $reviewedAdvert = null;
-        if ($request->has('user_id')) {
-            /** @var User $reviewedUser */
-            $reviewedUser = User::find($request->user_id);
-            $existingReview = $reviewedUser->reviews->firstWhere('reviewer_id', $user->id);
+{
+    $user = Auth::user();
+    /** @var User|null $reviewedUser */
+    $reviewedUser = $request->has('user_id') ? User::find($request->user_id) : null;
+    /** @var Advert|null $reviewedAdvert */
+    $reviewedAdvert = $request->has('advert_id') ? Advert::find($request->advert_id) : null;
 
-            if ($existingReview || $user->id == $reviewedUser->id) {
-                return back();
-            }
-        } elseif ($request->has('advert_id')) {
-            /** @var Advert $reviewedAdvert */
-            $reviewedAdvert = Advert::find($request->advert_id);
-            $existingReview = $reviewedAdvert->reviews->firstWhere('reviewer_id', $user->id);
-
-            if ($existingReview) {
-                return back();
-            }
-        }
-
-        if ($request->validated()) {
-            $reviewData = $request->validated() + ['reviewer_id' => $user->id];
-
-            if ($reviewedUser) {
-                $reviewData['user_id'] = $reviewedUser->id;
-            } elseif ($reviewedAdvert) {
-                $reviewData['advert_id'] = $reviewedAdvert->id;
-            }
-            Review::create($reviewData);
-        }
-
-        if ($reviewedUser) {
-            return redirect()->route('profile', ['url' => $reviewedUser->url]);
-        } elseif ($reviewedAdvert) {
-            return redirect()->route('adverts.show', ['advert' => $reviewedAdvert->id]);
-        }
-        return redirect()->back();
+    $existingReview = $reviewedUser ?
+        $reviewedUser->reviews->firstWhere('reviewer_id', $user->id) :
+        $reviewedAdvert->reviews->firstWhere('reviewer_id', $user->id);
+    if ($existingReview || ($reviewedUser && $user->id == $reviewedUser->id)) {
+        return back();
     }
+
+    if ($request->validated()) {
+        $reviewData = $request->validated() + ['reviewer_id' => $user->id];
+        Review::create($reviewData);
+    }
+
+    return $reviewedUser ?
+        redirect()->route('profile', ['url' => $reviewedUser->url]) :
+        redirect()->route('adverts.show', ['advert' => $reviewedAdvert->id]);
+}
 
     public function destroy(string $id): RedirectResponse
     {
@@ -62,10 +45,13 @@ class ReviewController extends Controller
             return redirect()->back();
         }
         $review->delete();
-        $reviewsLeft = Review::where('user_id', $review->user_id)->count();
-        // If there are no reviews left, redirect to profile view
+
+        $redirectRoute = $review->user_id ? 'profile' : 'adverts.show';
+        $redirectParam = $review->user_id ? ['url' => $review->user->url] : ['advert' => $review->advert_id];
+        $reviewsLeft = Review::where($review->user_id ? 'user_id' : 'advert_id', $review->user_id ?: $review->advert_id)->count();
+
         if ($reviewsLeft == 0) {
-            return redirect()->route('profile', ['url' => $review->user->url]);
+            return redirect()->route($redirectRoute, $redirectParam);
         }
 
         return redirect()->back();
