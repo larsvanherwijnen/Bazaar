@@ -40,4 +40,8 @@ return [
     'no_rentals_found' => 'Geen verhuur gevonden',
     'rented' => 'Gehuurd',
     'rented_out' => 'Verhuurd',
+    'rent_dates' => 'Huurdata',
+    'from' => 'Vanaf',
+    'to' => 'Tot',
+    'date_format' => 'd-m-Y',
 ];

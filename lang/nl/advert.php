@@ -25,4 +25,6 @@ return [
     'favorites' => 'Favorieten',
     'favorite' => 'Favoriet',
     'remove_favorite' => 'Verwijder favoriet',
+    'purchased_adverts' => 'Gekochte advertenties',
+    'date_bought' => 'Datum gekocht',
 ];

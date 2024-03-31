@@ -38,4 +38,9 @@ return [
     'no_rentals_found' => 'No rentals found',
     'rented' => 'Rented',
     'rented_out' => 'Rented out',
+    'rent_dates' => 'Rented dates',
+    'from' => 'From',
+    'to' => 'To',
+    'date_format' => 'Y-m-d',
+
 ];
