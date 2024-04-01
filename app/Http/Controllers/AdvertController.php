@@ -40,7 +40,7 @@ class AdvertController extends Controller
         return view('advert.show')->with($data);
     }
 
-    public function sellBuy(Advert $advert, Bid $bid = null): RedirectResponse
+    public function sellBuy(Advert $advert, ?Bid $bid = null): RedirectResponse
     {
         if ($bid) {
             $advert->bought_by = $bid->user_id;

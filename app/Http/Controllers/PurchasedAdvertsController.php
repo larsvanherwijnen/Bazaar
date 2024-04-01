@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Advert;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class PurchasedAdvertsController extends Controller
 {
-
     public function __invoke(): View
     {
         $user = auth()->user();
@@ -21,8 +19,10 @@ class PurchasedAdvertsController extends Controller
         $purchasedAdverts = $purchasedAdverts->map(function ($advert) use ($user) {
             /** @phpstan-ignore-next-line  */
             $advert->rentals = $user->rentals->where('advert_id', $advert->id);
+
             return $advert;
         });
+
         return view('purchased_adverts')->with(['purchasedAdverts' => $purchasedAdverts]);
     }
 }
