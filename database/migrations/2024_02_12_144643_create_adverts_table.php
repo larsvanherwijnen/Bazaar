@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('adverts', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained();
+            $table->foreignUuid('bought_by')->nullable()->references('id')->on('users');
             $table->string('title');
             $table->text('description');
             $table->string('type');
             $table->unsignedDecimal('price', 10, 2)->nullable();
             $table->unsignedDecimal('starting_price', 10, 2)->nullable();
+            $table->dateTime('bought_at')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('expiry_date')->nullable();
             $table->timestamps();

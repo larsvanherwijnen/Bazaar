@@ -1,3 +1,8 @@
+@if($advert->bought_by)
+    <div class="flex flex-col bg-white rounded">
+        <span class="text-xl font-bold text-gray-900">{{ __('advert.sold') }}</span>
+    </div>
+@else
 <div class="flex flex-col bg-white rounded" x-data="{amount: ''}">
     <form wire:submit="save" class="space-y-4">
         <div class="flex flex-col">
@@ -27,6 +32,15 @@
                 <div class="flex justify-between border-t border-gray-300 py-2">
                     <p>{{ $bid->user->name }}</p>
                     <p>€{{ $bid->amount }}</p>
+                    @if(auth()->check() && auth()->user()->id == $advert->user_id)
+                        <form action="{{ route('adverts.sellBuy', ['advert' => $advert->id, 'bid' => $bid->id]) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                                {{ __('advert.sell') }}
+                            </button>
+                        </form>
+                    @endif
                 </div>
             @endforeach
         </div>
@@ -34,3 +48,4 @@
         <span class="text-sm text-gray-500 text-center p-5">{{ __('advert.no_bids_yet') }}</span>
     @endif
 </div>
+@endif

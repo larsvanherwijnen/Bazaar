@@ -25,4 +25,9 @@ return [
     'favorites' => 'Favorites',
     'favorite' => 'Favorite',
     'remove_favorite' => 'Remove Favorite',
+    'purchased_adverts' => 'Purchased Adverts',
+    'date_bought' => 'Date Bought',
+    'sell' => 'Sell',
+    'sold' => 'Sold',
+    'buy' => 'Buy',
 ];

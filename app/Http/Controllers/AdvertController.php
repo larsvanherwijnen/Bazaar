@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Advert;
+use App\Models\Bid;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -21,9 +23,33 @@ class AdvertController extends Controller
      */
     public function show(Advert $advert): View
     {
-        $reviewsCount = $advert->user->reviews->count();
-        $averageRating = $advert->user->reviews->avg('rating');
+        $user = auth()->user();
+        $reviews = $advert->reviews;
+        $userReviews = $advert->user->reviews;
 
-        return view('advert.show')->with(['advert' => $advert, 'reviewsCount' => $reviewsCount, 'averageRating' => $averageRating]);
+        $data = [
+            'advert' => $advert,
+            'reviewsCount' => $userReviews->count(),
+            'averageRating' => $userReviews->avg('rating'),
+            'reviewsCountRental' => $reviews->count(),
+            'averageRatingRental' => $reviews->avg('rating'),
+            'showReviewButton' => $reviews->whereNotNull('comment')->count() > 0,
+            'showReviewCreateButton' => $user ? $reviews->where('reviewer_id', $user->id)->isEmpty() : false,        'reviews' => $reviews->whereNotNull('comment'),
+        ];
+
+        return view('advert.show')->with($data);
+    }
+
+    public function sellBuy(Advert $advert, ?Bid $bid = null): RedirectResponse
+    {
+        if ($bid) {
+            $advert->bought_by = $bid->user_id;
+        } else {
+            $advert->bought_by = auth()->id();
+        }
+        $advert->bought_at = now();
+        $advert->save();
+
+        return redirect()->back();
     }
 }

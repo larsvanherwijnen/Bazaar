@@ -3,31 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReviewRequest;
+use App\Models\Advert;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 
 class ReviewController extends Controller
 {
     public function store(ReviewRequest $request): RedirectResponse
     {
         $user = Auth::user();
-        /** @var User $reviewedUser */
-        $reviewedUser = User::find($request->user_id);
-        $existingReview = $reviewedUser->reviews->firstWhere('reviewer_id', $user->id);
+        /** @var User|null $reviewedUser */
+        $reviewedUser = $request->has('user_id') ? User::find($request->user_id) : null;
+        /** @var Advert|null $reviewedAdvert */
+        $reviewedAdvert = $request->has('advert_id') ? Advert::find($request->advert_id) : null;
 
-        if ($existingReview || $user->id == $reviewedUser->id) {
+        $existingReview = $reviewedUser ?
+            $reviewedUser->reviews->firstWhere('reviewer_id', $user->id) :
+            $reviewedAdvert->reviews->firstWhere('reviewer_id', $user->id);
+        if ($existingReview || ($reviewedUser && $user->id == $reviewedUser->id)) {
             return back();
         }
 
         if ($request->validated()) {
-            Review::create($request->validated() + ['reviewer_id' => $user->id]);
+            $reviewData = $request->validated() + ['reviewer_id' => $user->id];
+            Review::create($reviewData);
         }
 
-        return redirect()->route('profile', ['url' => $reviewedUser->url]);
+        return $reviewedUser ?
+            redirect()->route('profile', ['url' => $reviewedUser->url]) :
+            redirect()->route('adverts.show', ['advert' => $reviewedAdvert->id]);
     }
 
     public function destroy(string $id): RedirectResponse
@@ -37,10 +43,13 @@ class ReviewController extends Controller
             return redirect()->back();
         }
         $review->delete();
-        $reviewsLeft = Review::where('user_id', $review->user_id)->count();
-        // If there are no reviews left, redirect to profile view
+
+        $redirectRoute = $review->user_id ? 'profile' : 'adverts.show';
+        $redirectParam = $review->user_id ? ['url' => $review->user->url] : ['advert' => $review->advert_id];
+        $reviewsLeft = Review::where($review->user_id ? 'user_id' : 'advert_id', $review->user_id ?: $review->advert_id)->count();
+
         if ($reviewsLeft == 0) {
-            return redirect()->route('profile', ['url' => $review->user->url]);
+            return redirect()->route($redirectRoute, $redirectParam);
         }
 
         return redirect()->back();

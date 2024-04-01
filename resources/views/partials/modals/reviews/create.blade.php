@@ -1,11 +1,16 @@
 <div x-show="openModal"
-     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
     <div class="bg-white p-6 max-w-md mx-auto rounded-md">
         <h1 class="text-3xl font-bold mb-4">{{__('global.create_review')}}</h1>
         <form id="form1" action="{{ route('reviews.store') }}" method="POST" class="space-y-4">
             @csrf
-            <input type="hidden" name="user_id" value="{{ $user->id }}">
-                <p class="text-red-500 rating-error" data-error-message="{{ __('validation.rating_error') }}">
+            @isset($user)
+                <input type="hidden" name="user_id" value="{{ $user->id }}">
+            @endisset
+            @isset($advert)
+                <input type="hidden" name="advert_id" value="{{ $advert->id }}">
+            @endisset
+            <p class="text-red-500 rating-error" data-error-message="{{ __('validation.rating_error') }}">
                     @error('rating')
                     {{ $message }}
                     @enderror
