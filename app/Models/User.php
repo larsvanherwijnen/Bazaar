@@ -27,6 +27,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read int|null $adverts_count
  * @property-read \App\Models\Company|null $company
  * @property-read \App\Models\Contract|null $contract
+ * @property-read \Illuminate\Database\Eloquent\Collection $rentals
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens

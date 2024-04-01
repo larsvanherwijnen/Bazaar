@@ -44,4 +44,6 @@ return [
     'from' => 'Vanaf',
     'to' => 'Tot',
     'date_format' => 'd-m-Y',
+    'dutch' => 'Nederlands',
+    'english' => 'Engels',
 ];

@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchasedAdvertsController;
 use App\Http\Controllers\ReviewController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::post('/language', [LanguageController::class, 'changeLanguage'])->name('changeLanguage');
 
 Route::get('/u/{url}', ProfileController::class)->name('profile');
 Route::get('/adverts2', \App\Livewire\Adverts::class)->name('adverts.index');
