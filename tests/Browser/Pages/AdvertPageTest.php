@@ -199,11 +199,4 @@ class AdvertPageTest extends DuskTestCase
             }
         });
     }
-
-
-
-
-
-
-
 }
