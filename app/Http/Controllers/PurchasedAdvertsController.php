@@ -19,6 +19,7 @@ class PurchasedAdvertsController extends Controller
 
         $purchasedAdverts = $purchasedAdverts->merge($rentedAdverts);
         $purchasedAdverts = $purchasedAdverts->map(function ($advert) use ($user) {
+            /** @phpstan-ignore-next-line  */
             $advert->rentals = $user->rentals->where('advert_id', $advert->id);
             return $advert;
         });

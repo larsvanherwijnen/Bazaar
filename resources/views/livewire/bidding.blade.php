@@ -33,11 +33,11 @@
                     <p>{{ $bid->user->name }}</p>
                     <p>€{{ $bid->amount }}</p>
                     @if(auth()->check() && auth()->user()->id == $advert->user_id)
-                        <form action="{{ route('adverts.sell', ['advert' => $advert->id, 'bid' => $bid->id]) }}" method="POST">
+                        <form action="{{ route('adverts.sellBuy', ['advert' => $advert->id, 'bid' => $bid->id]) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                                {{ __('advert.sellBuy') }}
+                                {{ __('advert.sell') }}
                             </button>
                         </form>
                     @endif
