@@ -22,7 +22,7 @@ class ReviewTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($user) {
             $browser->visit(route('profile', $user->url))
-                ->waitFor($user->name)
+                ->waitForText($user->name)
                 ->assertSee($user->name);
         });
     }
