@@ -12,7 +12,7 @@
                     <option value="nl" {{ app()->getLocale() === 'nl' ? 'selected' : '' }}>{{__('global.dutch')}}</option>
                     <option value="en" {{ app()->getLocale() === 'en' ? 'selected' : '' }}>{{__('global.english')}}</option>
                 </select>
-    `       </form>
+            </form>
             <div class="flex space-x-4 items-center">
                 @if(Auth::check())
                     <div x-data="{open: false}" @click="open = ! open">

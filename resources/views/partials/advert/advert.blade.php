@@ -58,7 +58,7 @@
         {{ $advert->description}}
     </div>
     <div class="mt-8 space-y-2">
-                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(64)->generate(route('adverts.show', $advert))) !!} ">
+{{--                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(64)->generate(route('adverts.show', $advert))) !!} ">--}}
     </div>
 </div>
 
