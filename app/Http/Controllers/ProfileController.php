@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advert;
 use App\Models\User;
 use Illuminate\View\View;
 
@@ -23,7 +24,7 @@ class ProfileController extends Controller
             $hasReviewed = $user->reviews->contains('reviewer_id', auth()->id());
             $showCreateButton = auth()->id() != $user->id && ! $hasReviewed;
         }
-
-        return view('profile')->with(['user' => $user, 'averageRating' => $averageRating, 'reviewsCount' => $reviewsCount, 'reviews' => $reviews, 'showCreateButton' => $showCreateButton]);
+        $adverts = Advert::inRandomOrder()->take(5)->get();
+        return view('profile')->with(['user' => $user, 'averageRating' => $averageRating, 'reviewsCount' => $reviewsCount, 'reviews' => $reviews, 'showCreateButton' => $showCreateButton, 'adverts' => $adverts]);        return view('profile')->with(['user' => $user, 'averageRating' => $averageRating, 'reviewsCount' => $reviewsCount, 'reviews' => $reviews, 'showCreateButton' => $showCreateButton, 'adverts' => $adverts]);
     }
 }
