@@ -22,9 +22,6 @@
                     <li>
                         <a href="{{ route('my-account.rental.agenda')}}" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 @if(request()->routeIs('my-account.rental-agenda')) text-blue-600 border-blue-600 @endif">{{ __('global.agenda') }}</a>
                     </li>
-                    <li class="me-2">
-                        <a href="#" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300">Contacts</a>
-                    </li>
                 </ul>
             </div>
         </div>

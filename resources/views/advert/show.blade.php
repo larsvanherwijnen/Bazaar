@@ -24,7 +24,7 @@
                                 <form action="{{ route('adverts.sellBuy', ['advert' => $advert->id]) }}" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                                    <button type="submit" id="buy" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                                         {{ __('advert.buy') }}
                                     </button>
                                 </form>

@@ -2,6 +2,7 @@
 
 namespace Tests\Browser\Pages;
 
+use App\Enum\AdvertType;
 use App\Enum\RolesEnum;
 use App\Models\Advert;
 use App\Models\AdvertImage;
@@ -32,6 +33,38 @@ class MyAdvertsPageTest extends DuskTestCase
                 ->assertSee('€'.number_format($advert->price, 2, ','))
                 ->assertSee($advert->user->name)
                 ->assertAttribute('img', 'src', '/storage/images/'.$image_path); // Check if the image source is equal to the one in the advert
+        });
+    }
+
+    public function testAdvertCreationForAllTypes()
+    {
+        $this->browse(function (Browser $browser) {
+            // Creating a test user
+            $user = User::factory()->create();
+
+            // Iterate over all advert types
+            foreach (AdvertType::cases() as $type) {
+                $browser->loginAs($user)
+                    ->visit(route('my-account.adverts.create'))
+                    ->assertSee(__('advert.create_advert'))
+                    ->click("label[for='{$type->value}']")
+                    ->type('title', 'Test ' . $type->getLabel())
+                    ->type('description', 'This is a test ' . $type->getLabel() . ' advert description.');
+
+                // Additional fields based on advert type
+                switch ($type) {
+                    case AdvertType::SALE:
+                    case AdvertType::RENTAL:
+                        $browser->type('price', 100);
+                        break;
+                    case AdvertType::BIDDING:
+                    case AdvertType::AUCTION:
+                        $browser->type('starting_price', 50);
+                        break;
+                }
+
+                $browser->press("#submit");
+            }
         });
     }
 }

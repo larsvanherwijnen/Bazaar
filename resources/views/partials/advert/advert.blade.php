@@ -3,12 +3,12 @@
     @if(auth()->check() && auth()->user()->id == $advert->user_id)
         <div class="flex space-x-4 justify-end">
             <a href="{{ route('my-account.adverts.edit', $advert) }}" class="bg-yellow-400 rounded p-1 text-sm"><i
-                        class="fa-solid fa-pen-to-square mr-2"></i>{{__('global.edit')}}</a>
+                        class="fa-solid fa-pen-to-square mr-2" id="edit"></i>{{__('global.edit')}}</a>
             <form action="{{route('my-account.adverts.destroy', $advert)}}" method="POST">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="bg-red-500 rounded p-1 text-sm"><i
-                            class="fa-solid fa-trash mr-2"></i>{{__('global.delete')}}</button>
+                            class="fa-solid fa-trash mr-2" id="deleteAdvert"></i>{{__('global.delete')}}</button>
             </form>
         </div>
     @endif

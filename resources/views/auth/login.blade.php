@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div>
-                    <button type="submit" class="rounded px-3 py-2  bg-green-200">
+                    <button type="submit" id="login" class="rounded px-3 py-2  bg-green-200">
                         {{__('auth.login') }}
                     </button>
                 </div>

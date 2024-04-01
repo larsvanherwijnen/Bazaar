@@ -5,6 +5,7 @@ namespace Tests\Browser\Pages;
 use App\Enum\AdvertType;
 use App\Models\Advert;
 use App\Models\AdvertImage;
+use App\Models\Rental;
 use App\Models\User;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
@@ -97,4 +98,112 @@ class AdvertPageTest extends DuskTestCase
                 ->assertSee('€53.00');
         });
     }
+
+    public function testBookingPlacement(): void
+    {
+        $user = User::factory()->create();
+        $advert = Advert::factory()->create(['type' => AdvertType::RENTAL, 'user_id' => $user->id]);
+
+        $this->browse(function (Browser $browser) use ($user, $advert) {
+            $browser->loginAs($user)
+                ->visit(route('adverts.show', $advert))
+                ->waitForText(__('advert.rental'), 2)
+                ->assertSee(__('advert.rental'))
+                ->assertSee(__('advert.start_date'))
+                ->assertSee(__('advert.end_date'))
+                ->assertSee(__('advert.place_booking'))
+                ->type('#start', now()->format('Y-m-d'))
+                ->type('#end', now()->addDays(2)->format('Y-m-d'))
+                ->press(__('advert.place_booking'));
+        });
+    }
+
+    public function testAdvertDeletion(): void
+    {
+        $user = User::factory()->create();
+        $advert = Advert::factory()->create(['user_id' => $user->id]);
+
+        $this->browse(function (Browser $browser) use ($user, $advert) {
+            $browser->loginAs($user)
+                ->visit(route('adverts.show', $advert))
+                ->waitForText($advert->title, 2)
+                ->assertSee($advert->title)
+                ->press(__('global.delete'));
+        });
+    }
+
+    public function testAdvertEdit(): void
+    {
+        $user = User::factory()->create();
+        $advert = Advert::factory()->create(['user_id' => $user->id]);
+
+        $this->browse(function (Browser $browser) use ($user, $advert) {
+            $browser->loginAs($user)
+                ->visit(route('adverts.show', $advert))
+                ->waitForText($advert->title, 2)
+                ->assertSee($advert->title)
+                ->press('#edit')
+                ->waitForText(__('advert.create_advert'))
+                ->assertSee(__('advert.create_advert'))
+                ->type('title', 'New title')
+                ->press('#save');
+        });
+    }
+
+    public function testBuyAdvert(){
+        $user = User::factory()->create();
+        $advertOwner = User::factory()->create();
+
+        $advert = Advert::factory()->create(['user_id' => $advertOwner->id, 'type' => AdvertType::SALE, 'price' => 100]);
+
+        $this->browse(function (Browser $browser) use ($user, $advert) {
+            $browser->loginAs($user)
+                ->visit(route('adverts.show', $advert))
+                ->waitForText($advert->title, 2)
+                ->assertSee($advert->title)
+                ->press("#buy");
+        });
+    }
+
+
+    public function testAdvertPageWithImages(): void
+    {
+        $user = User::factory()->create();
+        $advert = Advert::factory()->create(['user_id' => $user->id]);
+        AdvertImage::factory()->create(['advert_id' => $advert->id]);
+
+        $this->browse(function (Browser $browser) use ($user, $advert) {
+            $browser->loginAs($user)
+                ->visit(route('adverts.show', $advert))
+                ->assertSee($advert->title)
+                ->assertSee($advert->description)
+                ->assertSourceHas('mainImage');
+        });
+    }
+
+    public function testViewPurchasedAdverts()
+    {
+        // Create a user
+        $user = User::factory()->create();
+        $userBuyer = User::factory()->create();
+
+        // Create purchased adverts
+        $purchasedAdverts = Advert::factory()->count(3)->create(['user_id' =>$user->id ,'bought_by' => $userBuyer->id]);
+
+        $this->browse(function (Browser $browser) use ($userBuyer, $purchasedAdverts) {
+            $browser->loginAs($userBuyer)
+                ->visit(route('my-account.purchased-adverts'));
+
+            foreach ($purchasedAdverts as $advert) {
+                $browser->assertSee($advert->title);
+            }
+        });
+    }
+
+
+
+
+
+
+
 }
