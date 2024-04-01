@@ -6,6 +6,13 @@
                     <h1 class="font-bold text-xl">De Bazaar</h1>
                 </a>
             </div>
+            <form method="POST" action="{{ route('changeLanguage') }}" class="inline-block">
+                @csrf
+                <select name="language" onchange="this.form.submit()" class="bg-white shadow appearance-none border rounded py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="nl" {{ app()->getLocale() === 'nl' ? 'selected' : '' }}>{{__('global.dutch')}}</option>
+                    <option value="en" {{ app()->getLocale() === 'en' ? 'selected' : '' }}>{{__('global.english')}}</option>
+                </select>
+            </form>
             <div class="flex space-x-4 items-center">
                 @if(Auth::check())
                     <div x-data="{open: false}" @click="open = ! open">

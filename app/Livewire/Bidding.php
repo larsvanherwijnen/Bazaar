@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Advert;
+use DateTime;
 use Illuminate\View\View;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -27,8 +28,15 @@ class Bidding extends Component
 
     public function render(): View
     {
-        $bids = $this->advert->bids->collect()->sortByDesc('created_at');
-
-        return view('livewire.bidding')->with('bids', $bids);
+        $advert = $this->advert;
+        $bids = $advert->bids->collect()->sortByDesc('created_at');
+        $endDate = new DateTime($advert->end_date);
+        $now = new DateTime();
+        $interval = $now->diff($endDate);
+        $daysRemaining = $interval->days;
+        if ($endDate < $now) {
+            $daysRemaining = -1;
+        }
+        return view('livewire.bidding')->with(['bids' => $bids, 'daysRemaining' => $daysRemaining, 'now' => $now, 'endDate' => $endDate]);
     }
 }

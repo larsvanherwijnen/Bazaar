@@ -42,5 +42,7 @@ return [
     'from' => 'From',
     'to' => 'To',
     'date_format' => 'Y-m-d',
+    'dutch' => 'Dutch',
+    'english' => 'English',
 
 ];

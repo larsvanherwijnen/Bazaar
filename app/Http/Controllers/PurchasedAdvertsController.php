@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Advert;
 use Illuminate\View\View;
+use App\Models\Rental; // Update with the correct namespace if needed
+
 
 class PurchasedAdvertsController extends Controller
 {

@@ -47,5 +47,18 @@
     @else
         <span class="text-sm text-gray-500 text-center p-5">{{ __('advert.no_bids_yet') }}</span>
     @endif
+    @if($advert->type == \App\Enum\AdvertType::AUCTION)
+        <div class="flex flex-col items-center justify-between space-y-4  py-4 sm:flex-row sm:space-y-0">
+            @if ($daysRemaining > 1)
+                <span>Ends in {{$daysRemaining}} days</span>
+            @elseif ($daysRemaining == 1)
+                <span>Ends in 1 day</span>
+            @elseif ($now < $endDate)
+                <span>Ending soon</span>
+            @else
+                <span>Verlopen</span>
+            @endif
+        </div>
+    @endif
 </div>
 @endif
